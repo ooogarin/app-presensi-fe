@@ -1,28 +1,29 @@
 <template>
-    <div>
-        <!-- header -->
-        <header>
-            <nav class="bg-green-100">
-                <ul>
-                    <li><NuxtLink to="/">Home</NuxtLink></li>
-                    <li><NuxtLink to="/about">About</NuxtLink></li>
-                    <li><NuxtLink to="/products">Product</NuxtLink></li>
-                </ul>
-            </nav>
-        </header>
-
+    <div class="relative flex w-screen h-screen">
+        <!-- sidebar -->
+        <aside :class="{'-translate-x-full': !isSidebarVisible}" class="top-0 left-0 z-10 absolute shadow-md w-64 h-screen transition-all duration-500">
+            <Sidebar />
+        </aside>
+        
         <!-- main -->
-        <div>
-            <!-- page -->
+        <div :class="{'ml-0': !isSidebarVisible, 'ml-64': isSidebarVisible }" class="flex flex-col flex-1 bg-slate-50 transition-all duration-500">
+            <Header @toggle-sidebar="isSidebarVisible = !isSidebarVisible" />
             <slot />
         </div>
     </div>
 </template>
 
-<style scoped>
-  .router-link-active {
-    text-decoration: none;
-    font-weight: bold;
-    color: rgb(33, 139, 33);
-  }
-</style>
+<script>
+    import { ref } from 'vue';
+
+    export default {
+        setup() {
+            // toggle sidebar
+            const isSidebarVisible = ref(true); 
+
+            return {
+                isSidebarVisible
+            };
+        }
+    };
+</script>
