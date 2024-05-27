@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col bg-white w-64 h-full">
         <SidebarHeader />
-        <div class="flex flex-col px-4 py-8 overflow-y-scroll">
+        <div class="flex flex-col px-4 py-8 overflow-y-auto sidebar">
             <ul class="space-y-4">
                 <li>
                     <NuxtLink to="/" class="flex gap-4 hover:bg-slate-100 px-4 py-3 rounded-xl text-slate-600 stroke-slate-600">
@@ -35,9 +35,9 @@
                 </li>
                 <li class="relative">
                     <button @click="isCutiWrap = !isCutiWrap" class="flex hover:bg-slate-100 px-4 py-3 rounded-xl w-full text-slate-600 stroke-slate-600">
-                        <IconsTrello class="h-6 stroke-2"/>                           
+                        <IconsTrello class="h-6 stroke-2"/>
                         <span class="ml-4 font-bold text-left grow">Cuti</span>
-                        <IconsChevronDown :class="{'rotate-180': isCutiWrap}" class="h-6 transition stroke-2"/>
+                        <IconsChevronDown :class="{'rotate-180': !isCutiWrap}" class="h-6 transition duration-500 stroke-2"/>
                     </button>
                     <ul :class="{'h-0 py-0': isCutiWrap, 'h-[120px] py-2': !isCutiWrap}" class="space-y-2 w-full transition-all duration-500 overflow-hidden">
                         <li>
@@ -61,7 +61,7 @@
                     <button @click="isKaryawanWrap = !isKaryawanWrap" class="flex hover:bg-slate-100 px-4 py-3 rounded-xl w-full text-slate-600 stroke-slate-600">
                         <IconsUsers class="h-6 stroke-2"/>                           
                         <span class="ml-4 font-bold text-left grow">Karyawan</span>
-                        <IconsChevronDown :class="{'rotate-180': isKaryawanWrap}" class="h-6 transition stroke-2"/>
+                        <IconsChevronDown :class="{'rotate-180': !isKaryawanWrap}" class="h-6 transition duration-500 stroke-2"/>
                     </button>
                     <ul :class="{'h-0 py-0': isKaryawanWrap, 'h-[232px] py-2': !isKaryawanWrap}" class="space-y-2 w-full transition-all duration-500 overflow-hidden">
                         <li>
@@ -94,7 +94,7 @@
                     <button @click="isShiftWrap = !isShiftWrap" class="flex hover:bg-slate-100 px-4 py-3 rounded-xl w-full text-slate-600 stroke-slate-600">
                         <IconsUsers class="h-6 stroke-2"/>                           
                         <span class="ml-4 font-bold text-left grow">Shift</span>
-                        <IconsChevronDown :class="{'rotate-180': isShiftWrap}" class="h-6 transition stroke-2"/>
+                        <IconsChevronDown :class="{'rotate-180': !isShiftWrap}" class="h-6 transition duration-500 stroke-2"/>
                     </button>
                     <ul :class="{'h-0 py-0': isShiftWrap, 'h-[120px] py-2': !isShiftWrap}" class="space-y-2 w-full transition-all duration-500 overflow-hidden">
                         <li>
@@ -157,9 +157,20 @@
 </script>
 
 <style scoped>
-  .router-link-active {
-    background-color: #2563eb;
-    color: #fff;
-    stroke: #fff;
-  }
+    .router-link-active {
+        background-color: #2563eb;
+        color: #fff;
+        stroke: #fff;
+    }
+
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .sidebar::-webkit-scrollbar {
+        display: none;
+    }
+  
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .sidebar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
 </style>

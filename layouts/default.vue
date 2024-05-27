@@ -1,5 +1,5 @@
 <template>
-    <div class="relative flex w-screen h-screen">
+    <div class="flex w-screen h-screen">
         <!-- sidebar -->
         <aside :class="{'-translate-x-full': !isSidebarVisible}" class="top-0 left-0 z-10 absolute shadow-md w-64 h-screen transition-all duration-500">
             <Sidebar />
