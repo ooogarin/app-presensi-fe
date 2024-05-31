@@ -4,9 +4,13 @@
     <div class="p-4 w-full">
         <h1 class="mb-2 font-bold text-3xl">Presensi</h1>
         <div class="flex space-x-1">
-            <NuxtLink to="/attendance" class="text-blue-600">Presensi</NuxtLink>
-            <IconsChevronRight class="h-6 text-slate-600 bg stroke-2 stroke-slate-600"/>
-            <!-- <span>Detail Presensi</span> -->
+            <UBreadcrumb :links="linkBreadcrumb">
+                <template #default="{ link, isActive, index }">
+                    <span :class="isActive ? 'text-medium' : 'text-normal'" class="text-blue-600">
+                        {{link.label}}
+                    </span>
+                </template>
+            </UBreadcrumb>
         </div>
     </div>
 
@@ -15,10 +19,8 @@
         <!-- header -->
         <div class="flex justify-between items-center">  
             <div class="flex items-center gap-2">
-                <svg class="w-6 h-6 stroke-2 stroke-blue-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M22 3H2L10 12.46V19L14 21V12.46L22 3Z" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>                                         
-                <span class="font-bold text-xl">Filter Presensi</span>
+                <UIcon name="i-flowbite-filter-outline" class="w-6 h-6 text-blue-600"/>
+                <span class="font-semibold text-xl">Filter Presensi</span>
             </div>
             <button @click="isFilterWrap = !isFilterWrap" class="flex justify-center items-center border-2 bg-slate-50 hover:bg-slate-100 border-blue-600 w-12 font-medium transition duration-500 focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-100 rounded-full h-12 text-blue-600">
                 <IconsChevronDown :class="{'rotate-180': !isFilterWrap}" class="h-8 text-slate-600 transition duration-500 stroke-2 stroke-blue-600"/>
@@ -43,60 +45,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col w-full">
-                    <label for="" class="mb-2 font-bold text-base">Divisi</label>
-                    <div class="relative flex items-center">
-                        <select name="" id="" class="border-slate-600 pr-12 pl-4 border rounded-xl w-full h-12 focus:outline-slate-600 focus:outline-offset-1 cursor-pointer">
-                            <option value="" selected>Pilih Semua Divisi</option>
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                            <option value="">5</option>
-                        </select>
-                        <div class="right-1 absolute flex justify-end items-center bg-white pr-2 rounded-xl w-fit h-10 pointer-events-none round">
-                            <svg class="w-6 h-6 stroke-2 stroke-slate-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 9L12 15L18 9" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>                    
-                    </div>
-                </div>
-                <div class="flex flex-col w-full">
-                    <label for="" class="mb-2 font-bold text-base">Shift</label>
-                    <div class="relative flex items-center">
-                        <select name="" id="" class="border-slate-600 pr-12 pl-4 border rounded-xl w-full h-12 focus:outline-slate-600 focus:outline-offset-1 cursor-pointer">
-                            <option value="" selected>Pilih Semua Shift</option>
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                            <option value="">5</option>
-                        </select>
-                        <div class="right-1 absolute flex justify-end items-center bg-white pr-2 rounded-xl w-fit h-10 pointer-events-none round">
-                            <svg class="w-6 h-6 stroke-2 stroke-slate-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 9L12 15L18 9" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>                    
-                    </div>
-                </div>
-                <div class="flex flex-col col-span-3 w-full">
-                    <label for="" class="mb-2 font-bold text-base">Personil</label>
-                    <div class="relative flex items-center">
-                        <select name="" id="" class="border-slate-600 pr-12 pl-4 border rounded-xl w-full h-12 focus:outline-slate-600 focus:outline-offset-1 cursor-pointer">
-                            <option value="" selected>Pilih Semua Personil</option>
-                            <option value="">1</option>
-                            <option value="">2</option>
-                            <option value="">3</option>
-                            <option value="">4</option>
-                            <option value="">5</option>
-                        </select>
-                        <div class="right-1 absolute flex justify-end items-center bg-white pr-2 rounded-xl w-fit h-10 pointer-events-none round">
-                            <svg class="w-6 h-6 stroke-2 stroke-slate-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M6 9L12 15L18 9" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>                    
-                    </div>
-                </div>
+                <InputSelect v-model="selectedDivision" :dataSelect="dataSelectDivision" class="flex flex-col w-full" />
+                <InputSelect v-model="selectedShift" :dataSelect="dataSelectShift" class="flex flex-col w-full" />
+                <InputSelect v-model="selectedAccount" :dataSelect="dataSelectAccount" class="flex flex-col col-span-3 w-full" />
             </div>
 
             <!-- button submit -->
@@ -201,95 +152,199 @@
 </template>
 
 <script>
-  import { ref } from 'vue';
+    import { ref } from 'vue';
 
   export default {
     setup() {
-      // toggle filter
-      const isFilterWrap = ref(true);
+        // toggle filter
+        const isFilterWrap = ref(true);
 
-      // for data table
-      const data = [
-          {
-              "nama": "Ilham Garin Nugroho",
-              "tanggal": "13 Maret 2024",
-              "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-              "start": "08:15:00",
-              "end": "16:00:00"
-          },
-          {
-              "nama": "Alya Nadhira",
-              "tanggal": "14 Maret 2024",
-              "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-              "start": "09:00:00",
-              "end": "17:00:00"
-          },
-          {
-              "nama": "Raka Pratama",
-              "tanggal": "15 Maret 2024",
-              "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-              "start": "10:15:00",
-              "end": "18:00:00"
-          },
-          {
-              "nama": "Dina Maharani",
-              "tanggal": "16 Maret 2024",
-              "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-              "start": "08:00:00",
-              "end": "16:00:00"
-          },
-          {
-              "nama": "Budi Santoso",
-              "tanggal": "17 Maret 2024",
-              "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-              "start": "09:30:00",
-              "end": "17:00:00"
-          },
-          {
-              "nama": "Citra Lestari",
-              "tanggal": "18 Maret 2024",
-              "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-              "start": "10:00:00",
-              "end": "18:00:00"
-          },
-          {
-              "nama": "Fajar Nugraha",
-              "tanggal": "19 Maret 2024",
-              "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-              "start": "08:10:00",
-              "end": "16:00:00"
-          },
-          {
-              "nama": "Gina Safitri",
-              "tanggal": "20 Maret 2024",
-              "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-              "start": "09:45:00",
-              "end": "17:00:00"
-          },
-          {
-              "nama": "Hendra Setiawan",
-              "tanggal": "21 Maret 2024",
-              "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-              "start": "10:05:00",
-              "end": "18:00:00"
-          },
-          {
-              "nama": "Indah Permatasari",
-              "tanggal": "22 Maret 2024",
-              "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-              "start": "08:20:00",
-              "end": "16:00:00"
-          }
-      ];
+        // for data table
+        const data = [
+            {
+                "nama": "Ilham Garin Nugroho",
+                "tanggal": "13 Maret 2024",
+                "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+                "start": "08:15:00",
+                "end": "16:00:00"
+            },
+            {
+                "nama": "Alya Nadhira",
+                "tanggal": "14 Maret 2024",
+                "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+                "start": "09:00:00",
+                "end": "17:00:00"
+            },
+            {
+                "nama": "Raka Pratama",
+                "tanggal": "15 Maret 2024",
+                "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+                "start": "10:15:00",
+                "end": "18:00:00"
+            },
+            {
+                "nama": "Dina Maharani",
+                "tanggal": "16 Maret 2024",
+                "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+                "start": "08:00:00",
+                "end": "16:00:00"
+            },
+            {
+                "nama": "Budi Santoso",
+                "tanggal": "17 Maret 2024",
+                "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+                "start": "09:30:00",
+                "end": "17:00:00"
+            },
+            {
+                "nama": "Citra Lestari",
+                "tanggal": "18 Maret 2024",
+                "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+                "start": "10:00:00",
+                "end": "18:00:00"
+            },
+            {
+                "nama": "Fajar Nugraha",
+                "tanggal": "19 Maret 2024",
+                "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+                "start": "08:10:00",
+                "end": "16:00:00"
+            },
+            {
+                "nama": "Gina Safitri",
+                "tanggal": "20 Maret 2024",
+                "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+                "start": "09:45:00",
+                "end": "17:00:00"
+            },
+            {
+                "nama": "Hendra Setiawan",
+                "tanggal": "21 Maret 2024",
+                "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+                "start": "10:05:00",
+                "end": "18:00:00"
+            },
+            {
+                "nama": "Indah Permatasari",
+                "tanggal": "22 Maret 2024",
+                "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+                "start": "08:20:00",
+                "end": "16:00:00"
+            }
+        ];
 
-      return {
-        data,
-        isFilterWrap
-      };
+        // data select: division
+        const selectedDivision = ref("0");
+        const dataSelectDivision = {
+            info: {
+                label: "Divisi",
+                placeholder: "Pilih Semua Divisi"
+            },
+            options: [
+                {
+                    value: 1,
+                    label: "Divisi 1"
+                },
+                {
+                    value: 2,
+                    label: "Divisi 2"
+                },
+                {
+                    value: 3,
+                    label: "Divisi 3"
+                },
+                {
+                    value: 4,
+                    label: "Divisi 4"
+                },
+                {
+                    value: 5,
+                    label: "Divisi 5"
+                },
+            ]
+        };
+        // data select: shift
+        const selectedShift = ref("0");
+        const dataSelectShift = {
+            info: {
+                label: "Shift",
+                placeholder: "Pilih Semua Shift"
+            },
+            options: [
+                {
+                    value: 1,
+                    label: "Shift 1"
+                },
+                {
+                    value: 2,
+                    label: "Shift 2"
+                },
+                {
+                    value: 3,
+                    label: "Shift 3"
+                },
+            ]
+        };
+        // data select: account (personel)
+        const selectedAccount = ref("0");
+        const dataSelectAccount = {
+            info: {
+                label: "Personel",
+                placeholder: "Pilih Semua Personel"
+            },
+            options: [
+                {
+                    value: 1,
+                    label: "Personel 1"
+                },
+                {
+                    value: 2,
+                    label: "Personel 2"
+                },
+                {
+                    value: 3,
+                    label: "Personel 3"
+                },
+                {
+                    value: 4,
+                    label: "Personel 4"
+                },
+                {
+                    value: 5,
+                    label: "Personel 5"
+                },
+                {
+                    value: 6,
+                    label: "Personel 6"
+                },
+                {
+                    value: 7,
+                    label: "Personel 7"
+                },
+            ]
+        };
+
+        // link breadcrumb
+        const linkBreadcrumb = [
+            {
+                label: 'Presensi',
+                icon: 'i-heroicons-home',
+                labelClass: 'text-blue-600 text-base font-semibold',
+                iconClass: 'text-blue-600'
+            },
+        ];
+
+        return {
+            isFilterWrap,
+            data,
+            linkBreadcrumb,
+            dataSelectDivision,
+            selectedDivision,
+            dataSelectShift,
+            selectedShift,
+            dataSelectAccount,
+            selectedAccount,
+        };
     }
   };
 </script>
-
-<style>
-
-</style>
