@@ -31,21 +31,7 @@
         <div :class="{'h-0': isFilterWrap, 'h-[284px]': !isFilterWrap}" class="transition-all duration-500 overflow-hidden">
             <!-- list filter -->
             <div class="gap-6 grid grid-cols-3 p-6 w-full">
-                <div class="flex flex-col w-full">
-                    <label for="" class="mb-2 font-bold text-base">Periode Presensi</label>
-                    <div class="relative flex items-center">
-                        <input type="date" class="border-slate-600 pl-4 border rounded-xl w-full h-12 focus:outline-slate-600 focus:outline-offset-1 cursor-pointer" placeholder="Pilih Periode Presensi">
-                        <div class="right-1 absolute flex justify-end items-center bg-white pr-2 rounded-xl w-fit h-10 pointer-events-none round">
-                            <svg class="w-6 h-6 stroke-2 stroke-slate-600" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M19 4H5C3.89543 4 3 4.89543 3 6V20C3 21.1046 3.89543 22 5 22H19C20.1046 22 21 21.1046 21 20V6C21 4.89543 20.1046 4 19 4Z" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M16 2V6" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M8 2V6" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M3 10H21" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>                    
-                        </div>
-                    </div>
-                </div>
-
+                <DatePicker v-model="selectedDate" :dataSelect="dataSelectDate" :mode="modeDatepicker" class="flex flex-col w-full" />
                 <InputSelect v-model="selectedDivision" :dataSelect="dataSelectDivision" class="flex flex-col w-full" />
                 <InputSelect v-model="selectedShift" :dataSelect="dataSelectShift" class="flex flex-col w-full" />
                 <InputSelect v-model="selectedAccount" :dataSelect="dataSelectAccount" class="flex flex-col col-span-3 w-full" />
@@ -263,6 +249,28 @@
                 ]
             };
 
+            // data select: date (datepicker)
+            const modeDatepicker = 'a';
+            // const modeDatepicker = 'range';
+            const selectedDate = ref((modeDatepicker == 'single')
+                ? '-'
+                : { start: '', end: '' }
+            );
+            const dataSelectDate = {
+                info: {
+                    label: "Pilih Periode Presensi",
+                    placeholder: "Pilih Periode Presensi"
+                },
+                data: (modeDatepicker == 'single')
+                    ? computed(() => selectedDate.value === "-" || selectedDate.value === null ? "-" : dayjs(selectedDate.value).format('DD-MM-YYYY'))
+                    : computed(() => selectedDate.value.start === "" || selectedDate.value.start === null ? "-" : (`${dayjs(selectedDate.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
+            }
+            console.log('aaa :>> ', selectedDate.value);
+            watch(selectedDate, (newValue, oldValue) => {
+                console.log('date 1 :>> ', selectedDate.value.start);
+                console.log('date 2 :>> ', selectedDate.value.end);
+            });
+
             // data table
             const data = [
                 {
@@ -337,15 +345,6 @@
                 }
             ];
 
-            // using dayJS
-            const tanggal = ref("dayjs().format('YYYY-MM-DD')");
-            console.log('dayjs :>> ', dayjs());
-            console.log('date-fns :>> ', new Date());
-            
-            // watch(tanggal, (newValue, oldValue) => {
-                // console.log('tanggal :>> ', dayjs(newValue.end).format('YYYY-MM-DD'));
-            // });
-
             return {
                 isFilterWrap,
                 data,
@@ -356,7 +355,9 @@
                 selectedShift,
                 dataSelectAccount,
                 selectedAccount,
-                tanggal
+                dataSelectDate,
+                selectedDate,
+                modeDatepicker,
             };
         }
     };
