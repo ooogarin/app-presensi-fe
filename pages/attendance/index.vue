@@ -343,7 +343,7 @@
             console.log('date-fns :>> ', new Date());
             
             // watch(tanggal, (newValue, oldValue) => {
-                // console.log('tanggal 2 :>> ', dayjs(newValue.end).format('YYYY-MM-DD'));
+                // console.log('tanggal :>> ', dayjs(newValue.end).format('YYYY-MM-DD'));
             // });
 
             return {
