@@ -45,6 +45,7 @@
                         </div>
                     </div>
                 </div>
+
                 <InputSelect v-model="selectedDivision" :dataSelect="dataSelectDivision" class="flex flex-col w-full" />
                 <InputSelect v-model="selectedShift" :dataSelect="dataSelectShift" class="flex flex-col w-full" />
                 <InputSelect v-model="selectedAccount" :dataSelect="dataSelectAccount" class="flex flex-col col-span-3 w-full" />
@@ -153,198 +154,210 @@
 
 <script>
     import { ref } from 'vue';
+    import dayjs from 'dayjs';
 
-  export default {
-    setup() {
-        // toggle filter
-        const isFilterWrap = ref(true);
+    export default {
+        setup() {
 
-        // for data table
-        const data = [
-            {
-                "nama": "Ilham Garin Nugroho",
-                "tanggal": "13 Maret 2024",
-                "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                "start": "08:15:00",
-                "end": "16:00:00"
-            },
-            {
-                "nama": "Alya Nadhira",
-                "tanggal": "14 Maret 2024",
-                "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                "start": "09:00:00",
-                "end": "17:00:00"
-            },
-            {
-                "nama": "Raka Pratama",
-                "tanggal": "15 Maret 2024",
-                "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                "start": "10:15:00",
-                "end": "18:00:00"
-            },
-            {
-                "nama": "Dina Maharani",
-                "tanggal": "16 Maret 2024",
-                "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                "start": "08:00:00",
-                "end": "16:00:00"
-            },
-            {
-                "nama": "Budi Santoso",
-                "tanggal": "17 Maret 2024",
-                "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                "start": "09:30:00",
-                "end": "17:00:00"
-            },
-            {
-                "nama": "Citra Lestari",
-                "tanggal": "18 Maret 2024",
-                "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                "start": "10:00:00",
-                "end": "18:00:00"
-            },
-            {
-                "nama": "Fajar Nugraha",
-                "tanggal": "19 Maret 2024",
-                "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                "start": "08:10:00",
-                "end": "16:00:00"
-            },
-            {
-                "nama": "Gina Safitri",
-                "tanggal": "20 Maret 2024",
-                "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                "start": "09:45:00",
-                "end": "17:00:00"
-            },
-            {
-                "nama": "Hendra Setiawan",
-                "tanggal": "21 Maret 2024",
-                "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                "start": "10:05:00",
-                "end": "18:00:00"
-            },
-            {
-                "nama": "Indah Permatasari",
-                "tanggal": "22 Maret 2024",
-                "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                "start": "08:20:00",
-                "end": "16:00:00"
-            }
-        ];
+            // toggle filter
+            const isFilterWrap = ref(false);
 
-        // data select: division
-        const selectedDivision = ref("0");
-        const dataSelectDivision = {
-            info: {
-                label: "Divisi",
-                placeholder: "Pilih Semua Divisi"
-            },
-            options: [
+            // link breadcrumb
+            const linkBreadcrumb = [
                 {
-                    value: 1,
-                    label: "Divisi 1"
+                    label: 'Presensi',
+                    icon: 'i-heroicons-home',
+                    labelClass: 'text-blue-600 text-base font-semibold',
+                    iconClass: 'text-blue-600'
                 },
-                {
-                    value: 2,
-                    label: "Divisi 2"
-                },
-                {
-                    value: 3,
-                    label: "Divisi 3"
-                },
-                {
-                    value: 4,
-                    label: "Divisi 4"
-                },
-                {
-                    value: 5,
-                    label: "Divisi 5"
-                },
-            ]
-        };
-        // data select: shift
-        const selectedShift = ref("0");
-        const dataSelectShift = {
-            info: {
-                label: "Shift",
-                placeholder: "Pilih Semua Shift"
-            },
-            options: [
-                {
-                    value: 1,
-                    label: "Shift 1"
-                },
-                {
-                    value: 2,
-                    label: "Shift 2"
-                },
-                {
-                    value: 3,
-                    label: "Shift 3"
-                },
-            ]
-        };
-        // data select: account (personel)
-        const selectedAccount = ref("0");
-        const dataSelectAccount = {
-            info: {
-                label: "Personel",
-                placeholder: "Pilih Semua Personel"
-            },
-            options: [
-                {
-                    value: 1,
-                    label: "Personel 1"
-                },
-                {
-                    value: 2,
-                    label: "Personel 2"
-                },
-                {
-                    value: 3,
-                    label: "Personel 3"
-                },
-                {
-                    value: 4,
-                    label: "Personel 4"
-                },
-                {
-                    value: 5,
-                    label: "Personel 5"
-                },
-                {
-                    value: 6,
-                    label: "Personel 6"
-                },
-                {
-                    value: 7,
-                    label: "Personel 7"
-                },
-            ]
-        };
+            ];
 
-        // link breadcrumb
-        const linkBreadcrumb = [
-            {
-                label: 'Presensi',
-                icon: 'i-heroicons-home',
-                labelClass: 'text-blue-600 text-base font-semibold',
-                iconClass: 'text-blue-600'
-            },
-        ];
+            // data select: division
+            const selectedDivision = ref("0");
+            const dataSelectDivision = {
+                info: {
+                    label: "Divisi",
+                    placeholder: "Pilih Semua Divisi"
+                },
+                options: [
+                    {
+                        value: 1,
+                        label: "Divisi 1"
+                    },
+                    {
+                        value: 2,
+                        label: "Divisi 2"
+                    },
+                    {
+                        value: 3,
+                        label: "Divisi 3"
+                    },
+                    {
+                        value: 4,
+                        label: "Divisi 4"
+                    },
+                    {
+                        value: 5,
+                        label: "Divisi 5"
+                    },
+                ]
+            };
+            // data select: shift
+            const selectedShift = ref("0");
+            const dataSelectShift = {
+                info: {
+                    label: "Shift",
+                    placeholder: "Pilih Semua Shift"
+                },
+                options: [
+                    {
+                        value: 1,
+                        label: "Shift 1"
+                    },
+                    {
+                        value: 2,
+                        label: "Shift 2"
+                    },
+                    {
+                        value: 3,
+                        label: "Shift 3"
+                    },
+                ]
+            };
+            // data select: account (personel)
+            const selectedAccount = ref("0");
+            const dataSelectAccount = {
+                info: {
+                    label: "Personel",
+                    placeholder: "Pilih Semua Personel"
+                },
+                options: [
+                    {
+                        value: 1,
+                        label: "Personel 1"
+                    },
+                    {
+                        value: 2,
+                        label: "Personel 2"
+                    },
+                    {
+                        value: 3,
+                        label: "Personel 3"
+                    },
+                    {
+                        value: 4,
+                        label: "Personel 4"
+                    },
+                    {
+                        value: 5,
+                        label: "Personel 5"
+                    },
+                    {
+                        value: 6,
+                        label: "Personel 6"
+                    },
+                    {
+                        value: 7,
+                        label: "Personel 7"
+                    },
+                ]
+            };
 
-        return {
-            isFilterWrap,
-            data,
-            linkBreadcrumb,
-            dataSelectDivision,
-            selectedDivision,
-            dataSelectShift,
-            selectedShift,
-            dataSelectAccount,
-            selectedAccount,
-        };
-    }
-  };
+            // data table
+            const data = [
+                {
+                    "nama": "Ilham Garin Nugroho",
+                    "tanggal": "13 Maret 2024",
+                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+                    "start": "08:15:00",
+                    "end": "16:00:00"
+                },
+                {
+                    "nama": "Alya Nadhira",
+                    "tanggal": "14 Maret 2024",
+                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+                    "start": "09:00:00",
+                    "end": "17:00:00"
+                },
+                {
+                    "nama": "Raka Pratama",
+                    "tanggal": "15 Maret 2024",
+                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+                    "start": "10:15:00",
+                    "end": "18:00:00"
+                },
+                {
+                    "nama": "Dina Maharani",
+                    "tanggal": "16 Maret 2024",
+                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+                    "start": "08:00:00",
+                    "end": "16:00:00"
+                },
+                {
+                    "nama": "Budi Santoso",
+                    "tanggal": "17 Maret 2024",
+                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+                    "start": "09:30:00",
+                    "end": "17:00:00"
+                },
+                {
+                    "nama": "Citra Lestari",
+                    "tanggal": "18 Maret 2024",
+                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+                    "start": "10:00:00",
+                    "end": "18:00:00"
+                },
+                {
+                    "nama": "Fajar Nugraha",
+                    "tanggal": "19 Maret 2024",
+                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+                    "start": "08:10:00",
+                    "end": "16:00:00"
+                },
+                {
+                    "nama": "Gina Safitri",
+                    "tanggal": "20 Maret 2024",
+                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+                    "start": "09:45:00",
+                    "end": "17:00:00"
+                },
+                {
+                    "nama": "Hendra Setiawan",
+                    "tanggal": "21 Maret 2024",
+                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+                    "start": "10:05:00",
+                    "end": "18:00:00"
+                },
+                {
+                    "nama": "Indah Permatasari",
+                    "tanggal": "22 Maret 2024",
+                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+                    "start": "08:20:00",
+                    "end": "16:00:00"
+                }
+            ];
+
+            // using dayJS
+            const tanggal = ref("dayjs().format('YYYY-MM-DD')");
+            console.log('dayjs :>> ', dayjs());
+            console.log('date-fns :>> ', new Date());
+            
+            // watch(tanggal, (newValue, oldValue) => {
+                // console.log('tanggal 2 :>> ', dayjs(newValue.end).format('YYYY-MM-DD'));
+            // });
+
+            return {
+                isFilterWrap,
+                data,
+                linkBreadcrumb,
+                dataSelectDivision,
+                selectedDivision,
+                dataSelectShift,
+                selectedShift,
+                dataSelectAccount,
+                selectedAccount,
+                tanggal
+            };
+        }
+    };
 </script>
