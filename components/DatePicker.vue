@@ -20,7 +20,7 @@
 
 <template>
     <div>
-        <label for="" class="mb-2 font-bold text-base">{{ dataSelect.info.label }} (Selected: {{ dataSelect.data.value === "-" ? "-" : dataSelect.data.value }})</label>
+        <label for="" class="mb-2 font-bold text-base">{{ dataSelect.info.label }}</label>
         <div class="relative flex items-center">
             <UPopover :popper="{ placement: 'bottom-start' }" class="py-1 rounded-xl w-full h-12 cursor-pointer pe-12 ps-4 ring-1 ring-slate-600 focus:outline-slate-600 focus:outline-offset-1">
                 <template #panel="{ close }">

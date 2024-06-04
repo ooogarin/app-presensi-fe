@@ -30,11 +30,11 @@
         <!-- show/hide filter -->
         <div :class="{'h-0': isFilterWrap, 'h-[284px]': !isFilterWrap}" class="transition-all duration-500 overflow-hidden">
             <!-- list filter -->
-            <div class="gap-6 grid grid-cols-3 p-6 w-full">
-                <DatePicker v-model="selectedDate" :dataSelect="dataSelectDate" :mode="modeDatepicker" class="flex flex-col w-full" />
-                <InputSelect v-model="selectedDivision" :dataSelect="dataSelectDivision" class="flex flex-col w-full" />
-                <InputSelect v-model="selectedShift" :dataSelect="dataSelectShift" class="flex flex-col w-full" />
-                <InputSelect v-model="selectedAccount" :dataSelect="dataSelectAccount" class="flex flex-col col-span-3 w-full" />
+            <div class="gap-6 grid grid-cols-12 p-6 w-full">
+                <DatePicker v-model="selectedDate" :dataSelect="dataSelectDate" :mode="modeDatepicker" class="flex flex-col col-span-4 w-full" />
+                <InputSelect v-model="selectedDivision" :dataSelect="dataSelectDivision" class="flex flex-col col-span-4 w-full" />
+                <InputSelect v-model="selectedShift" :dataSelect="dataSelectShift" class="flex flex-col col-span-4 w-full" />
+                <InputSelect v-model="selectedAccount" :dataSelect="dataSelectAccount" class="flex flex-col col-span-12 w-full" />
             </div>
 
             <!-- button submit -->
@@ -247,9 +247,8 @@
                     },
                 ]
             };
-
             // data select: date (datepicker)
-            const modeDatepicker = 'single'; // single | range
+            const modeDatepicker = 'range'; // single | range
             const selectedDate = ref((modeDatepicker == 'single')
                 ? '-'
                 : { start: '', end: '' }
