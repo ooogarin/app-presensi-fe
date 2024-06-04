@@ -20,7 +20,7 @@
         <div class="flex justify-between items-center">  
             <div class="flex items-center gap-2">
                 <UIcon name="i-flowbite-filter-outline" class="w-6 h-6 text-blue-600"/>
-                <span class="font-semibold text-xl">Filter Presensi</span>
+                <span class="font-semibold text-xl">Filter Jadwal</span>
             </div>
             <button @click="isFilterWrap = !isFilterWrap" class="flex justify-center items-center border-2 bg-slate-50 hover:bg-slate-100 border-blue-600 w-12 font-medium transition duration-500 focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-100 rounded-full h-12 text-blue-600">
                 <IconsChevronDown :class="{'rotate-180': !isFilterWrap}" class="h-8 text-slate-600 transition duration-500 stroke-2 stroke-blue-600"/>
@@ -140,7 +140,7 @@
 </template>
 
 <script>
-    import { ref, reactive } from 'vue';
+    import { ref } from 'vue';
     import dayjs from 'dayjs';
 
     export default {
@@ -152,7 +152,7 @@
             const linkBreadcrumb = [
                 {
                     label: 'Jadwal',
-                    icon: 'i-heroicons-home',
+                    icon: 'i-heroicons-calendar',
                     labelClass: 'text-blue-600 text-base font-semibold',
                     iconClass: 'text-blue-600'
                 },
@@ -354,11 +354,6 @@
                     "end": "16:00:00"
                 }
             ];
-
-            watch(selectedStatus, (newValue, oldValue) => {
-                    console.log('object :>> ', newValue);
-                }
-            )
 
             return {
                 isFilterWrap,

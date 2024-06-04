@@ -151,12 +151,27 @@
             const linkBreadcrumb = [
                 {
                     label: 'Presensi',
-                    icon: 'i-heroicons-home',
+                    icon: 'i-heroicons-pencil-square',
                     labelClass: 'text-blue-600 text-base font-semibold',
                     iconClass: 'text-blue-600'
                 },
             ];
 
+            // data select: date (datepicker)
+            const modeDatepicker = 'range'; // single | range
+            const selectedDate = ref((modeDatepicker == 'single')
+                ? '-'
+                : { start: '', end: '' }
+            );
+            const dataSelectDate = {
+                info: {
+                    label: "Pilih Periode Presensi",
+                    placeholder: "Pilih Periode Presensi"
+                },
+                data: (modeDatepicker == 'single')
+                    ? computed(() => selectedDate.value === "-" || selectedDate.value === null ? "-" : dayjs(selectedDate.value).format('DD-MM-YYYY'))
+                    : computed(() => selectedDate.value.start === "" || selectedDate.value.start === null ? "-" : (`${dayjs(selectedDate.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
+            }
             // data select: division
             const selectedDivision = ref('-');
             const dataSelectDivision = {
@@ -247,21 +262,6 @@
                     },
                 ]
             };
-            // data select: date (datepicker)
-            const modeDatepicker = 'range'; // single | range
-            const selectedDate = ref((modeDatepicker == 'single')
-                ? '-'
-                : { start: '', end: '' }
-            );
-            const dataSelectDate = {
-                info: {
-                    label: "Pilih Periode Presensi",
-                    placeholder: "Pilih Periode Presensi"
-                },
-                data: (modeDatepicker == 'single')
-                    ? computed(() => selectedDate.value === "-" || selectedDate.value === null ? "-" : dayjs(selectedDate.value).format('DD-MM-YYYY'))
-                    : computed(() => selectedDate.value.start === "" || selectedDate.value.start === null ? "-" : (`${dayjs(selectedDate.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
-            }
 
             // data table
             const data = [
