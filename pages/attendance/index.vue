@@ -19,7 +19,7 @@
         <!-- header -->
         <div class="flex justify-between items-center">  
             <div class="flex items-center gap-2">
-                <UIcon name="i-flowbite-filter-outline" class="w-6 h-6 text-blue-600"/>
+                <UIcon name="i-flowbite-filter-outline" class="w-6 h-6 text-blue-600" />
                 <span class="font-semibold text-xl">Filter Presensi</span>
             </div>
             <button @click="isFilterWrap = !isFilterWrap" class="flex justify-center items-center border-2 bg-slate-50 hover:bg-slate-100 border-blue-600 w-12 font-medium transition duration-500 focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-100 rounded-full h-12 text-blue-600">

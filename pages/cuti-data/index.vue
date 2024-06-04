@@ -31,8 +31,8 @@
         <div :class="isFilterWrap ? 'h-0' : 'h-[180px]'" class="transition-all duration-500 overflow-hidden">
             <!-- list filter -->
             <div class="gap-6 grid grid-cols-12 p-6 w-full">
-                <InputSelect v-model="selectedRole" :dataSelect="dataSelectRole" class="flex flex-col col-span-3 w-full" />
-                <InputSelect v-model="selectedAccount" :dataSelect="dataSelectAccount" class="flex flex-col col-span-9 w-full" />
+                <InputSelect v-model="selectedRole" :dataSelect="dataSelectRole" class="flex flex-col col-span-4 w-full" />
+                <InputSelect v-model="selectedAccount" :dataSelect="dataSelectAccount" class="flex flex-col col-span-8 w-full" />
             </div>
 
             <!-- button submit -->
