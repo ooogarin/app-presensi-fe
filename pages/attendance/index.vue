@@ -144,7 +144,6 @@
 
     export default {
         setup() {
-
             // toggle filter
             const isFilterWrap = ref(false);
 
@@ -159,7 +158,7 @@
             ];
 
             // data select: division
-            const selectedDivision = ref("0");
+            const selectedDivision = ref('-');
             const dataSelectDivision = {
                 info: {
                     label: "Divisi",
@@ -189,7 +188,7 @@
                 ]
             };
             // data select: shift
-            const selectedShift = ref("0");
+            const selectedShift = ref('-');
             const dataSelectShift = {
                 info: {
                     label: "Shift",
@@ -211,7 +210,7 @@
                 ]
             };
             // data select: account (personel)
-            const selectedAccount = ref("0");
+            const selectedAccount = ref('-');
             const dataSelectAccount = {
                 info: {
                     label: "Personel",
@@ -250,8 +249,7 @@
             };
 
             // data select: date (datepicker)
-            const modeDatepicker = 'a';
-            // const modeDatepicker = 'range';
+            const modeDatepicker = 'single'; // single | range
             const selectedDate = ref((modeDatepicker == 'single')
                 ? '-'
                 : { start: '', end: '' }
@@ -265,11 +263,6 @@
                     ? computed(() => selectedDate.value === "-" || selectedDate.value === null ? "-" : dayjs(selectedDate.value).format('DD-MM-YYYY'))
                     : computed(() => selectedDate.value.start === "" || selectedDate.value.start === null ? "-" : (`${dayjs(selectedDate.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
             }
-            console.log('aaa :>> ', selectedDate.value);
-            watch(selectedDate, (newValue, oldValue) => {
-                console.log('date 1 :>> ', selectedDate.value.start);
-                console.log('date 2 :>> ', selectedDate.value.end);
-            });
 
             // data table
             const data = [
