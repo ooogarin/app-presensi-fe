@@ -71,7 +71,7 @@
 </template>
 
 <script>
-    import { ref, reactive } from 'vue';
+    import { ref } from 'vue';
 
     export default {
         setup() {
@@ -85,7 +85,7 @@
 
             // --- auth login ---
             // data login
-            const user = reactive({
+            const user = ref({
                 username: '',
                 password: ''
             });
@@ -94,7 +94,29 @@
             // });
 
             async function login() {
-                console.log('login: ', this.user)
+                console.log('login: ', this.user);
+
+                // call API login
+                const { data: response, error, status } = await useFetch('http://localhost:3000/web/v1/login',{
+                    method: 'POST',
+                    body: {
+                        username: this.user.username,
+                        password: this.user.password,
+                    },
+                });
+
+                // console.log('response :>> ', response);
+                // console.log('response error :>> ', error);
+                // console.log('response status :>> ', status);
+
+                if (status.value === "error") {
+                    console.log('login gagal');
+                } else {
+                    console.log('login berhasil');
+
+                    // redirect to dahboard
+                    navigateTo('/');
+                }
             }
 
             return {

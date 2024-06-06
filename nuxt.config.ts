@@ -4,7 +4,7 @@ export default defineNuxtConfig({
         "@nuxt/ui",
         "@nuxtjs/tailwindcss"
     ],
-    devtools: { enabled: false },
+    devtools: { enabled: true },
     devServer: {
         port: 3001
     },
