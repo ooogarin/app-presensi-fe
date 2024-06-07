@@ -7,7 +7,7 @@
         
         <!-- main -->
         <div :class="isSidebarVisible ? 'ml-64' : 'ml-0'" class="flex flex-col flex-1 bg-slate-50 transition-all duration-500">
-            <Header @toggle-sidebar="isSidebarVisible = !isSidebarVisible" />
+            <Header @toggle-sidebar="isSidebarVisible = !isSidebarVisible" class="z-10"/>
             <slot />
         </div>
     </div>

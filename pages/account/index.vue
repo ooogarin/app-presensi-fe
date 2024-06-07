@@ -56,8 +56,8 @@
                 <span class="font-bold text-xl">Data Cuti</span>    
             </div>
             <div class="flex gap-4">
-                <Button label="Export Data" icon="i-flowbite-printer-outline" />
-                <Button label="Tambah Personel" icon="i-flowbite-circle-plus-outline" />
+                <ButtonBase label="Export Data" icon="i-flowbite-printer-outline" />
+                <ButtonBase label="Tambah Personel" icon="i-flowbite-circle-plus-outline" />
             </div>
         </div>
         <div class="flex border-2 rounded-xl w-full overflow-hidden">

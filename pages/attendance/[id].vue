@@ -39,7 +39,7 @@
                         <UIcon name="i-flowbite-file-lines-outline" class="w-6 h-6 text-blue-600" />
                         <span class="font-semibold text-xl">Detail Presensi Mulai</span>
                     </div>
-                    <Button label="Lakukan Presensi" icon="i-flowbite-edit-outline" mode="solid" />
+                    <ButtonBase label="Lakukan Presensi" icon="i-flowbite-edit-outline" mode="solid" />
                 </div>
                 <!-- body -->
                 <div class="gap-2 gap-y-8 border-y grid grid-cols-4 p-8 text-lg">
@@ -64,10 +64,10 @@
                         <span class="font-semibold text-slate-800">Macet</span>
                     </div>
                     <div class="flex flex-col justify-center gap-2 font-medium">
-                        <Button label="Lihat Lokasi" icon="i-flowbite-map-pin-alt-outline"/>
+                        <ButtonBase label="Lihat Lokasi" icon="i-flowbite-map-pin-alt-outline"/>
                     </div>
                     <div class="flex flex-col justify-center gap-2 font-medium">
-                        <Button label="Lihat Foto" icon="i-heroicons-photo"/>
+                        <ButtonBase label="Lihat Foto" icon="i-heroicons-photo"/>
                     </div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
                         <UIcon name="i-flowbite-file-lines-outline" class="w-6 h-6 text-blue-600" />
                         <span class="font-semibold text-xl">Detail Presensi Selesai</span>
                     </div>
-                    <Button label="Lakukan Presensi" icon="i-flowbite-edit-outline" mode="solid" />
+                    <ButtonBase label="Lakukan Presensi" icon="i-flowbite-edit-outline" mode="solid" />
                 </div>
                 <!-- body -->
                 <div class="gap-2 gap-y-8 border-y grid grid-cols-4 p-8 text-lg">
@@ -104,10 +104,10 @@
                         <span class="font-semibold text-slate-800">Macet</span>
                     </div>
                     <div class="flex flex-col justify-center gap-2 font-medium">
-                        <Button label="Lihat Lokasi" icon="i-flowbite-map-pin-alt-outline"/>
+                        <ButtonBase label="Lihat Lokasi" icon="i-flowbite-map-pin-alt-outline"/>
                     </div>
                     <div class="flex flex-col justify-center gap-2 font-medium">
-                        <Button label="Lihat Foto" icon="i-heroicons-photo"/>
+                        <ButtonBase label="Lihat Foto" icon="i-heroicons-photo"/>
                     </div>
                 </div>
             </div>

@@ -22,8 +22,8 @@
                 <span class="font-bold text-xl">Data Level Personel</span>    
             </div>
             <div class="flex gap-4">
-                <Button label="Test" icon="i-flowbite-circle-plus-outline" />
-                <Button label="Tambah Data" icon="i-flowbite-circle-plus-outline" />
+                <ButtonBase label="Test" icon="i-flowbite-circle-plus-outline" />
+                <ButtonBase label="Tambah Data" icon="i-flowbite-circle-plus-outline" />
             </div>
         </div>
         <div class="flex border-2 rounded-xl w-full overflow-hidden">

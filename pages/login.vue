@@ -11,7 +11,7 @@
             </div>
             <div class="flex-1 h-2/4">
                 <div class="flex justify-center items-center">
-                    <form @submit.prevent="login" class="flex flex-col p-4 w-full">
+                    <form @submit.prevent="login" class="flex flex-col p-4 w-full h-full">
                         <div class="flex flex-col h-[204px]">
                             <div class="flex flex-col gap-4">
                                 <div class="flex flex-col">
@@ -57,11 +57,11 @@
                                 </span>
                             </div>
                         </div>
-                        <button class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 mt-5 px-4 py-2 rounded-xl w-full h-14 focus:outline-none font-medium text-slate-50 text-xl focus:ring focus:ring-slate-300">Login</button>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 active:bg-blue-800 mt-5 px-4 py-2 rounded-xl w-full h-14 focus:outline-none font-medium text-slate-50 text-xl focus:ring focus:ring-slate-300">Login</button>
                     </form>
                 </div>
             </div>
-            <div class="flex justify-center items-end p-2 h-1/4">
+            <div class="flex justify-center items-end p-2">
                 <div class="h-fit font-bold text-slate-600">
                     Copyright 2024
                 </div>
@@ -71,10 +71,6 @@
 </template>
 
 <script setup>
-    definePageMeta({
-        layout: 'login'
-    });
-
     import { ref } from 'vue';
 
     // toggle password
@@ -90,34 +86,35 @@
         username: '',
         password: ''
     });
-    // watch(user, (newValue, oldValue) => {
-    //     console.log('usera :>> ', newValue);
-    // });
 
     async function login() {
-        console.log('login: ', this.user);
+        console.log('login: ', user.value);
 
         // call API login
-        const { data: response, status } = await useFetch('http://localhost:3000/web/v1/login',{
-            method: 'POST',
-            body: {
-                username: this.user.username,
-                password: this.user.password,
-            },
-        });
+        // const { data: response, status } = await useFetch('http://localhost:3000/web/v1/login',{
+        //     method: 'POST',
+        //     body: {
+        //         username: user.value.username,
+        //         password: user.value.password,
+        //     },
+        // });
 
-        // console.log('response :>> ', response);
-        // console.log('response status :>> ', status);
+        // // console.log('response :>> ', response);
+        // // console.log('response status :>> ', status);
 
-        if (status.value === "error") {
-            console.log('login gagal');
-        } else {
-            console.log('login berhasil');
+        // if (status.value === "error") {
+        //     console.log('login gagal');
+        // } else {
+        //     console.log('login berhasil');
 
-            // redirect to dashboard
-            navigateTo('/');
-        }
+        //     // redirect to dashboard
+        //     navigateTo('/');
+        // }
     }
+
+    definePageMeta({
+        layout: 'login'
+    });
 </script>
 
 <style>
