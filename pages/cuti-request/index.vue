@@ -31,8 +31,8 @@
         <div :class="isFilterWrap ? 'h-0' : 'h-[284px]'" class="transition-all duration-500 overflow-hidden">
             <!-- list filter -->
             <div class="gap-6 grid grid-cols-12 p-6 w-full">
-                <DatePicker v-model="selectedDateRequest" :dataSelect="dataSelectDateRequest" :mode="modeDatepickerRequest" class="flex flex-col col-span-4 w-full" />
-                <DatePicker v-model="selectedDatePeriode" :dataSelect="dataSelectDatePeriode" :mode="modeDatepickerPeriode" class="flex flex-col col-span-4 w-full" />
+                <InputDatePicker v-model="selectedDateRequest" :dataSelect="dataSelectDateRequest" :mode="modeDatepickerRequest" class="flex flex-col col-span-4 w-full" />
+                <InputDatePicker v-model="selectedDatePeriode" :dataSelect="dataSelectDatePeriode" :mode="modeDatepickerPeriode" class="flex flex-col col-span-4 w-full" />
                 <InputSelect v-model="selectedCutiType" :dataSelect="dataSelectCutiType" class="flex flex-col col-span-4 w-full" />
                 <InputSelect v-model="selectedAccount" :dataSelect="dataSelectAccount" class="flex flex-col col-span-6 w-full" />
                 <InputCheckboxTriple v-model="selectedStatus" :dataSelect="dataSelectStatus" class="flex flex-col col-span-6 w-full" />
@@ -164,13 +164,14 @@
     );
     const dataSelectDateRequest = {
         info: {
-            label: "Pilih Periode Presensi",
-            placeholder: "Pilih Periode Presensi"
+            label: "Pilih Periode Pengajuan Cuti",
+            placeholder: "Pilih Periode Pengajuan Cuti"
         },
         data: (modeDatepickerRequest == 'single')
             ? computed(() => selectedDateRequest.value === "-" || selectedDateRequest.value === null ? "-" : dayjs(selectedDateRequest.value).format('DD-MM-YYYY'))
-            : computed(() => selectedDateRequest.value.start === "" || selectedDateRequest.value.start === null ? "-" : (`${dayjs(selectedDateRequest.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
+            : computed(() => selectedDateRequest.value.start === "" || selectedDateRequest.value.start === null ? "-" : (`${dayjs(selectedDateRequest.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDateRequest.value.end).format('DD-MM-YYYY')}`))
     }
+
     // 2. data select: periode cuti (datepicker)
     const modeDatepickerPeriode = 'range'; // single | range
     const selectedDatePeriode = ref((modeDatepickerPeriode == 'single')
@@ -179,12 +180,12 @@
     );
     const dataSelectDatePeriode = {
         info: {
-            label: "Pilih Periode Presensi",
-            placeholder: "Pilih Periode Presensi"
+            label: "Pilih Periode Cuti",
+            placeholder: "Pilih Periode Cuti"
         },
         data: (modeDatepickerPeriode == 'single')
             ? computed(() => selectedDatePeriode.value === "-" || selectedDatePeriode.value === null ? "-" : dayjs(selectedDatePeriode.value).format('DD-MM-YYYY'))
-            : computed(() => selectedDatePeriode.value.start === "" || selectedDatePeriode.value.start === null ? "-" : (`${dayjs(selectedDatePeriode.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
+            : computed(() => selectedDatePeriode.value.start === "" || selectedDatePeriode.value.start === null ? "-" : (`${dayjs(selectedDatePeriode.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDatePeriode.value.end).format('DD-MM-YYYY')}`))
     }
     // 3. data select: cuti type
     const selectedCutiType = ref('-');

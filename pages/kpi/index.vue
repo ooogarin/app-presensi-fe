@@ -31,7 +31,7 @@
         <div :class="isFilterWrap ? 'h-0' : 'h-[284px]'" class="transition-all duration-500 overflow-hidden">
             <!-- list filter -->
             <div class="gap-6 grid grid-cols-12 p-6 w-full">
-                <DatePicker v-model="selectedDate" :dataSelect="dataSelectDate" :mode="modeDatepicker" class="flex flex-col col-span-6 w-full" />
+                <InputDatePicker v-model="selectedDate" :dataSelect="dataSelectDate" :mode="modeDatepicker" class="flex flex-col col-span-6 w-full" />
                 <InputSelect v-model="selectedRole" :dataSelect="dataSelectRole" class="flex flex-col col-span-6 w-full" />
                 <InputSelect v-model="selectedAccount" :dataSelect="dataSelectAccount" class="flex flex-col col-span-12 w-full" />
             </div>
@@ -162,8 +162,8 @@
     );
     const dataSelectDate = {
         info: {
-            label: "Pilih Periode Presensi",
-            placeholder: "Pilih Periode Presensi"
+            label: "Pilih Periode KPI",
+            placeholder: "Pilih Periode KPI"
         },
         data: (modeDatepicker == 'single')
             ? computed(() => selectedDate.value === "-" || selectedDate.value === null ? "-" : dayjs(selectedDate.value).format('DD-MM-YYYY'))

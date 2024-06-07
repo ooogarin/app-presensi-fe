@@ -31,7 +31,7 @@
         <div :class="{'h-0': isFilterWrap, 'h-[284px]': !isFilterWrap}" class="transition-all duration-500 overflow-hidden">
             <!-- list filter -->
             <div class="gap-6 grid grid-cols-12 p-6 w-full">
-                <DatePicker v-model="selectedDate" :dataSelect="dataSelectDate" :mode="modeDatepicker" class="flex flex-col col-span-4 w-full" />
+                <InputDatePicker v-model="selectedDate" :dataSelect="dataSelectDate" :mode="modeDatepicker" class="flex flex-col col-span-4 w-full" />
                 <InputSelect v-model="selectedDivision" :dataSelect="dataSelectDivision" class="flex flex-col col-span-4 w-full" />
                 <InputSelect v-model="selectedShift" :dataSelect="dataSelectShift" class="flex flex-col col-span-4 w-full" />
                 <InputSelect v-model="selectedAccount" :dataSelect="dataSelectAccount" class="flex flex-col col-span-8 w-full" />
