@@ -2,7 +2,7 @@
     <div class="flex flex-col space-y-4 px-8 pt-4 pb-12 w-full overflow-y-auto">
         <!-- title page -->
         <div class="p-4 w-full">
-            <h1 class="mb-2 font-bold text-3xl">Presensi</h1>
+            <h1 class="mb-2 font-bold text-3xl">Detail Presensi</h1>
             <div class="flex space-x-1">
                 <UBreadcrumb :links="linkBreadcrumb">
                     <template #default="{ link, isActive, index }">
@@ -116,11 +116,6 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-
-    // toggle filter
-    const isFilterWrap = ref(false);
-
     // link breadcrumb
     const linkBreadcrumb = [
         {
