@@ -137,196 +137,178 @@
   </div>
 </template>
 
-<script>
+<script setup>
     import { ref } from 'vue';
     import dayjs from 'dayjs';
 
-    export default {
-        setup() {
-            // toggle filter
-            const isFilterWrap = ref(false);
+    // toggle filter
+    const isFilterWrap = ref(false);
 
-            // link breadcrumb
-            const linkBreadcrumb = [
-                {
-                    label: 'KPI Personel',
-                    icon: 'i-heroicons-user',
-                    labelClass: 'text-blue-600 text-base font-semibold',
-                    iconClass: 'text-blue-600'
-                },
-            ];
+    // link breadcrumb
+    const linkBreadcrumb = [
+        {
+            label: 'KPI Personel',
+            icon: 'i-heroicons-user',
+            labelClass: 'text-blue-600 text-base font-semibold',
+            iconClass: 'text-blue-600'
+        },
+    ];
 
-            // 1. data select: date (datepicker)
-            const modeDatepicker = 'range'; // single | range
-            const selectedDate = ref((modeDatepicker == 'single')
-                ? '-'
-                : { start: '', end: '' }
-            );
-            const dataSelectDate = {
-                info: {
-                    label: "Pilih Periode Presensi",
-                    placeholder: "Pilih Periode Presensi"
-                },
-                data: (modeDatepicker == 'single')
-                    ? computed(() => selectedDate.value === "-" || selectedDate.value === null ? "-" : dayjs(selectedDate.value).format('DD-MM-YYYY'))
-                    : computed(() => selectedDate.value.start === "" || selectedDate.value.start === null ? "-" : (`${dayjs(selectedDate.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
-            }
-            // 2. data select: role
-            const selectedRole = ref('-');
-            const dataSelectRole = {
-                info: {
-                    label: "Role",
-                    placeholder: "Pilih Semua Role"
-                },
-                options: [
-                    {
-                        value: 1,
-                        label: "Role 1"
-                    },
-                    {
-                        value: 2,
-                        label: "Role 2"
-                    },
-                    {
-                        value: 3,
-                        label: "Role 3"
-                    },
-                    {
-                        value: 4,
-                        label: "Role 4"
-                    },
-                    {
-                        value: 5,
-                        label: "Role 5"
-                    },
-                ]
-            };
-            // 3. data select: account (personel)
-            const selectedAccount = ref('-');
-            const dataSelectAccount = {
-                info: {
-                    label: "Personel",
-                    placeholder: "Pilih Semua Personel"
-                },
-                options: [
-                    {
-                        value: 1,
-                        label: "Personel 1"
-                    },
-                    {
-                        value: 2,
-                        label: "Personel 2"
-                    },
-                    {
-                        value: 3,
-                        label: "Personel 3"
-                    },
-                    {
-                        value: 4,
-                        label: "Personel 4"
-                    },
-                    {
-                        value: 5,
-                        label: "Personel 5"
-                    },
-                    {
-                        value: 6,
-                        label: "Personel 6"
-                    },
-                    {
-                        value: 7,
-                        label: "Personel 7"
-                    },
-                ]
-            };
-
-
-            // data table
-            const dataTable = [
-                {
-                    "nama": "Ilham Garin Nugroho",
-                    "tanggal": "13 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:15:00",
-                    "end": "16:00:00"
-                },
-                {
-                    "nama": "Alya Nadhira",
-                    "tanggal": "14 Maret 2024",
-                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                    "start": "09:00:00",
-                    "end": "17:00:00"
-                },
-                {
-                    "nama": "Raka Pratama",
-                    "tanggal": "15 Maret 2024",
-                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                    "start": "10:15:00",
-                    "end": "18:00:00"
-                },
-                {
-                    "nama": "Dina Maharani",
-                    "tanggal": "16 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:00:00",
-                    "end": "16:00:00"
-                },
-                {
-                    "nama": "Budi Santoso",
-                    "tanggal": "17 Maret 2024",
-                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                    "start": "09:30:00",
-                    "end": "17:00:00"
-                },
-                {
-                    "nama": "Citra Lestari",
-                    "tanggal": "18 Maret 2024",
-                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                    "start": "10:00:00",
-                    "end": "18:00:00"
-                },
-                {
-                    "nama": "Fajar Nugraha",
-                    "tanggal": "19 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:10:00",
-                    "end": "16:00:00"
-                },
-                {
-                    "nama": "Gina Safitri",
-                    "tanggal": "20 Maret 2024",
-                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                    "start": "09:45:00",
-                    "end": "17:00:00"
-                },
-                {
-                    "nama": "Hendra Setiawan",
-                    "tanggal": "21 Maret 2024",
-                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                    "start": "10:05:00",
-                    "end": "18:00:00"
-                },
-                {
-                    "nama": "Indah Permatasari",
-                    "tanggal": "22 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:20:00",
-                    "end": "16:00:00"
-                }
-            ];
-
-            return {
-                isFilterWrap,
-                linkBreadcrumb,
-                dataTable,
-                dataSelectDate,
-                selectedDate,
-                modeDatepicker,
-                dataSelectRole,
-                selectedRole,
-                dataSelectAccount,
-                selectedAccount,
-            };
-        }
+    // 1. data select: date (datepicker)
+    const modeDatepicker = 'range'; // single | range
+    const selectedDate = ref((modeDatepicker == 'single')
+        ? '-'
+        : { start: '', end: '' }
+    );
+    const dataSelectDate = {
+        info: {
+            label: "Pilih Periode Presensi",
+            placeholder: "Pilih Periode Presensi"
+        },
+        data: (modeDatepicker == 'single')
+            ? computed(() => selectedDate.value === "-" || selectedDate.value === null ? "-" : dayjs(selectedDate.value).format('DD-MM-YYYY'))
+            : computed(() => selectedDate.value.start === "" || selectedDate.value.start === null ? "-" : (`${dayjs(selectedDate.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
+    }
+    // 2. data select: role
+    const selectedRole = ref('-');
+    const dataSelectRole = {
+        info: {
+            label: "Role",
+            placeholder: "Pilih Semua Role"
+        },
+        options: [
+            {
+                value: 1,
+                label: "Role 1"
+            },
+            {
+                value: 2,
+                label: "Role 2"
+            },
+            {
+                value: 3,
+                label: "Role 3"
+            },
+            {
+                value: 4,
+                label: "Role 4"
+            },
+            {
+                value: 5,
+                label: "Role 5"
+            },
+        ]
     };
+    // 3. data select: account (personel)
+    const selectedAccount = ref('-');
+    const dataSelectAccount = {
+        info: {
+            label: "Personel",
+            placeholder: "Pilih Semua Personel"
+        },
+        options: [
+            {
+                value: 1,
+                label: "Personel 1"
+            },
+            {
+                value: 2,
+                label: "Personel 2"
+            },
+            {
+                value: 3,
+                label: "Personel 3"
+            },
+            {
+                value: 4,
+                label: "Personel 4"
+            },
+            {
+                value: 5,
+                label: "Personel 5"
+            },
+            {
+                value: 6,
+                label: "Personel 6"
+            },
+            {
+                value: 7,
+                label: "Personel 7"
+            },
+        ]
+    };
+
+    // data table
+    const dataTable = [
+        {
+            "nama": "Ilham Garin Nugroho",
+            "tanggal": "13 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:15:00",
+            "end": "16:00:00"
+        },
+        {
+            "nama": "Alya Nadhira",
+            "tanggal": "14 Maret 2024",
+            "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+            "start": "09:00:00",
+            "end": "17:00:00"
+        },
+        {
+            "nama": "Raka Pratama",
+            "tanggal": "15 Maret 2024",
+            "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+            "start": "10:15:00",
+            "end": "18:00:00"
+        },
+        {
+            "nama": "Dina Maharani",
+            "tanggal": "16 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:00:00",
+            "end": "16:00:00"
+        },
+        {
+            "nama": "Budi Santoso",
+            "tanggal": "17 Maret 2024",
+            "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+            "start": "09:30:00",
+            "end": "17:00:00"
+        },
+        {
+            "nama": "Citra Lestari",
+            "tanggal": "18 Maret 2024",
+            "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+            "start": "10:00:00",
+            "end": "18:00:00"
+        },
+        {
+            "nama": "Fajar Nugraha",
+            "tanggal": "19 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:10:00",
+            "end": "16:00:00"
+        },
+        {
+            "nama": "Gina Safitri",
+            "tanggal": "20 Maret 2024",
+            "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+            "start": "09:45:00",
+            "end": "17:00:00"
+        },
+        {
+            "nama": "Hendra Setiawan",
+            "tanggal": "21 Maret 2024",
+            "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+            "start": "10:05:00",
+            "end": "18:00:00"
+        },
+        {
+            "nama": "Indah Permatasari",
+            "tanggal": "22 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:20:00",
+            "end": "16:00:00"
+        }
+    ];
 </script>

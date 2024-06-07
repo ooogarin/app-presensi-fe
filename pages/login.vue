@@ -70,67 +70,54 @@
     </div>
 </template>
 
-<script>
-    import { ref } from 'vue';
-
-    export default {
-        setup() {
-            // toggle password
-            const isHidePassword = ref(true);
-
-            const router = useRouter();
-            const handleSubmit = () => {
-                router.push('/attendance');
-            }
-
-            // --- auth login ---
-            // data login
-            const user = ref({
-                username: '',
-                password: ''
-            });
-            // watch(user, (newValue, oldValue) => {
-            //     console.log('usera :>> ', newValue);
-            // });
-
-            async function login() {
-                console.log('login: ', this.user);
-
-                // call API login
-                const { data: response, error, status } = await useFetch('http://localhost:3000/web/v1/login',{
-                    method: 'POST',
-                    body: {
-                        username: this.user.username,
-                        password: this.user.password,
-                    },
-                });
-
-                // console.log('response :>> ', response);
-                // console.log('response error :>> ', error);
-                // console.log('response status :>> ', status);
-
-                if (status.value === "error") {
-                    console.log('login gagal');
-                } else {
-                    console.log('login berhasil');
-
-                    // redirect to dahboard
-                    navigateTo('/');
-                }
-            }
-
-            return {
-                isHidePassword,
-                handleSubmit,
-                user,
-                login
-            }
-        }
-    };
-
+<script setup>
     definePageMeta({
         layout: 'login'
     });
+
+    import { ref } from 'vue';
+
+    // toggle password
+    const isHidePassword = ref(true);
+
+    const router = useRouter();
+    const handleSubmit = () => {
+        router.push('/attendance');
+    }
+
+    // --- auth login ---
+    const user = ref({
+        username: '',
+        password: ''
+    });
+    // watch(user, (newValue, oldValue) => {
+    //     console.log('usera :>> ', newValue);
+    // });
+
+    async function login() {
+        console.log('login: ', this.user);
+
+        // call API login
+        const { data: response, status } = await useFetch('http://localhost:3000/web/v1/login',{
+            method: 'POST',
+            body: {
+                username: this.user.username,
+                password: this.user.password,
+            },
+        });
+
+        // console.log('response :>> ', response);
+        // console.log('response status :>> ', status);
+
+        if (status.value === "error") {
+            console.log('login gagal');
+        } else {
+            console.log('login berhasil');
+
+            // redirect to dashboard
+            navigateTo('/');
+        }
+    }
 </script>
 
 <style>

@@ -6,24 +6,16 @@
         </aside>
         
         <!-- main -->
-        <div :class="{'ml-0': !isSidebarVisible, 'ml-64': isSidebarVisible }" class="flex flex-col flex-1 bg-slate-50 transition-all duration-500">
+        <div :class="isSidebarVisible ? 'ml-64' : 'ml-0'" class="flex flex-col flex-1 bg-slate-50 transition-all duration-500">
             <Header @toggle-sidebar="isSidebarVisible = !isSidebarVisible" />
             <slot />
         </div>
     </div>
 </template>
 
-<script>
+<script setup>
     import { ref } from 'vue';
 
-    export default {
-        setup() {
-            // toggle sidebar
-            const isSidebarVisible = ref(true); 
-
-            return {
-                isSidebarVisible
-            };
-        }
-    };
+    // toggle sidebar
+    const isSidebarVisible = ref(true);
 </script>

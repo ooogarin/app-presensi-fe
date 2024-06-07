@@ -100,48 +100,39 @@
   </div>
 </template>
 
-<script>
-    export default {
-        setup() {
-            // link breadcrumb
-            const linkBreadcrumb = [
-                {
-                    label: 'Data Divisi',
-                    icon: 'i-flowbite-database-outline',
-                    labelClass: 'text-blue-600 text-base font-semibold',
-                    iconClass: 'text-blue-600'
-                },
-            ];
+<script setup>
+    // link breadcrumb
+    const linkBreadcrumb = [
+        {
+            label: 'Data Divisi',
+            icon: 'i-flowbite-database-outline',
+            labelClass: 'text-blue-600 text-base font-semibold',
+            iconClass: 'text-blue-600'
+        },
+    ];
 
-            // data table
-            const dataTable = [
-                {
-                    "nama": "Ilham Garin Nugroho",
-                    "tanggal": "13 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:15:00",
-                    "end": "16:00:00"
-                },
-                {
-                    "nama": "Alya Nadhira",
-                    "tanggal": "14 Maret 2024",
-                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                    "start": "09:00:00",
-                    "end": "17:00:00"
-                },
-                {
-                    "nama": "Raka Pratama",
-                    "tanggal": "15 Maret 2024",
-                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                    "start": "10:15:00",
-                    "end": "18:00:00"
-                },
-            ];
-
-            return {
-                linkBreadcrumb,
-                dataTable,
-            };
-        }
-    };
+    // data table
+    const dataTable = [
+        {
+            "nama": "Ilham Garin Nugroho",
+            "tanggal": "13 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:15:00",
+            "end": "16:00:00"
+        },
+        {
+            "nama": "Alya Nadhira",
+            "tanggal": "14 Maret 2024",
+            "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+            "start": "09:00:00",
+            "end": "17:00:00"
+        },
+        {
+            "nama": "Raka Pratama",
+            "tanggal": "15 Maret 2024",
+            "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+            "start": "10:15:00",
+            "end": "18:00:00"
+        },
+    ];
 </script>

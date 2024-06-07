@@ -138,204 +138,186 @@
   </div>
 </template>
 
-<script>
+<script setup>
     import { ref } from 'vue';
     import dayjs from 'dayjs';
 
-    export default {
-        setup() {
-            // toggle filter
-            const isFilterWrap = ref(false);
+    // toggle filter
+    const isFilterWrap = ref(false);
 
-            // link breadcrumb
-            const linkBreadcrumb = [
-                {
-                    label: 'Shifting',
-                    icon: 'i-heroicons-clock',
-                    labelClass: 'text-blue-600 text-base font-semibold',
-                    iconClass: 'text-blue-600'
-                },
-            ];
+    // link breadcrumb
+    const linkBreadcrumb = [
+        {
+            label: 'Shifting',
+            icon: 'i-heroicons-clock',
+            labelClass: 'text-blue-600 text-base font-semibold',
+            iconClass: 'text-blue-600'
+        },
+    ];
 
-            // data select: division
-            const selectedDivision = ref('-');
-            const dataSelectDivision = {
-                info: {
-                    label: "Divisi",
-                    placeholder: "Pilih Semua Divisi"
-                },
-                options: [
-                    {
-                        value: 1,
-                        label: "Divisi 1"
-                    },
-                    {
-                        value: 2,
-                        label: "Divisi 2"
-                    },
-                    {
-                        value: 3,
-                        label: "Divisi 3"
-                    },
-                    {
-                        value: 4,
-                        label: "Divisi 4"
-                    },
-                    {
-                        value: 5,
-                        label: "Divisi 5"
-                    },
-                ]
-            };
-            // data select: shift
-            const selectedShift = ref('-');
-            const dataSelectShift = {
-                info: {
-                    label: "Shift",
-                    placeholder: "Pilih Semua Shift"
-                },
-                options: [
-                    {
-                        value: 1,
-                        label: "Shift 1"
-                    },
-                    {
-                        value: 2,
-                        label: "Shift 2"
-                    },
-                    {
-                        value: 3,
-                        label: "Shift 3"
-                    },
-                ]
-            };
-            // data select: shift type
-            const selectedShiftType = ref('-');
-            const dataSelectShiftType = {
-                info: {
-                    label: "Tipe Shift",
-                    placeholder: "Pilih Semua Tipe Shift"
-                },
-                options: [
-                    {
-                        value: 1,
-                        label: "Tipe Shift 1"
-                    },
-                    {
-                        value: 2,
-                        label: "Tipe Shift 2"
-                    },
-                    {
-                        value: 3,
-                        label: "Tipe Shift 3"
-                    },
-                ]
-            };
-            // data select: status jadwal
-            const selectedStatus = ref([]);
-            const dataSelectStatus = {
-                info: {
-                    label: "Status Shifting",
-                },
-                options: {
-                    aktif: {
-                        value: true,
-                        label: "Aktif"
-                    },
-                    nonaktif: {
-                        value: false,
-                        label: "Nonaktif"
-                    },
-                }
-            };
-
-            // data table
-            const dataTable = [
-                {
-                    "nama": "Ilham Garin Nugroho",
-                    "tanggal": "13 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:15:00",
-                    "end": "16:00:00"
-                },
-                {
-                    "nama": "Alya Nadhira",
-                    "tanggal": "14 Maret 2024",
-                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                    "start": "09:00:00",
-                    "end": "17:00:00"
-                },
-                {
-                    "nama": "Raka Pratama",
-                    "tanggal": "15 Maret 2024",
-                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                    "start": "10:15:00",
-                    "end": "18:00:00"
-                },
-                {
-                    "nama": "Dina Maharani",
-                    "tanggal": "16 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:00:00",
-                    "end": "16:00:00"
-                },
-                {
-                    "nama": "Budi Santoso",
-                    "tanggal": "17 Maret 2024",
-                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                    "start": "09:30:00",
-                    "end": "17:00:00"
-                },
-                {
-                    "nama": "Citra Lestari",
-                    "tanggal": "18 Maret 2024",
-                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                    "start": "10:00:00",
-                    "end": "18:00:00"
-                },
-                {
-                    "nama": "Fajar Nugraha",
-                    "tanggal": "19 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:10:00",
-                    "end": "16:00:00"
-                },
-                {
-                    "nama": "Gina Safitri",
-                    "tanggal": "20 Maret 2024",
-                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                    "start": "09:45:00",
-                    "end": "17:00:00"
-                },
-                {
-                    "nama": "Hendra Setiawan",
-                    "tanggal": "21 Maret 2024",
-                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                    "start": "10:05:00",
-                    "end": "18:00:00"
-                },
-                {
-                    "nama": "Indah Permatasari",
-                    "tanggal": "22 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:20:00",
-                    "end": "16:00:00"
-                }
-            ];
-
-            return {
-                isFilterWrap,
-                linkBreadcrumb,
-                dataTable,
-                dataSelectDivision,
-                selectedDivision,
-                dataSelectShift,
-                selectedShift,
-                dataSelectShiftType,
-                selectedShiftType,
-                selectedStatus,
-                dataSelectStatus,
-            };
+    // data select: division
+    const selectedDivision = ref('-');
+    const dataSelectDivision = {
+        info: {
+            label: "Divisi",
+            placeholder: "Pilih Semua Divisi"
+        },
+        options: [
+            {
+                value: 1,
+                label: "Divisi 1"
+            },
+            {
+                value: 2,
+                label: "Divisi 2"
+            },
+            {
+                value: 3,
+                label: "Divisi 3"
+            },
+            {
+                value: 4,
+                label: "Divisi 4"
+            },
+            {
+                value: 5,
+                label: "Divisi 5"
+            },
+        ]
+    };
+    // data select: shift
+    const selectedShift = ref('-');
+    const dataSelectShift = {
+        info: {
+            label: "Shift",
+            placeholder: "Pilih Semua Shift"
+        },
+        options: [
+            {
+                value: 1,
+                label: "Shift 1"
+            },
+            {
+                value: 2,
+                label: "Shift 2"
+            },
+            {
+                value: 3,
+                label: "Shift 3"
+            },
+        ]
+    };
+    // data select: shift type
+    const selectedShiftType = ref('-');
+    const dataSelectShiftType = {
+        info: {
+            label: "Tipe Shift",
+            placeholder: "Pilih Semua Tipe Shift"
+        },
+        options: [
+            {
+                value: 1,
+                label: "Tipe Shift 1"
+            },
+            {
+                value: 2,
+                label: "Tipe Shift 2"
+            },
+            {
+                value: 3,
+                label: "Tipe Shift 3"
+            },
+        ]
+    };
+    // data select: status jadwal
+    const selectedStatus = ref([]);
+    const dataSelectStatus = {
+        info: {
+            label: "Status Shifting",
+        },
+        options: {
+            aktif: {
+                value: true,
+                label: "Aktif"
+            },
+            nonaktif: {
+                value: false,
+                label: "Nonaktif"
+            },
         }
     };
+
+    // data table
+    const dataTable = [
+        {
+            "nama": "Ilham Garin Nugroho",
+            "tanggal": "13 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:15:00",
+            "end": "16:00:00"
+        },
+        {
+            "nama": "Alya Nadhira",
+            "tanggal": "14 Maret 2024",
+            "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+            "start": "09:00:00",
+            "end": "17:00:00"
+        },
+        {
+            "nama": "Raka Pratama",
+            "tanggal": "15 Maret 2024",
+            "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+            "start": "10:15:00",
+            "end": "18:00:00"
+        },
+        {
+            "nama": "Dina Maharani",
+            "tanggal": "16 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:00:00",
+            "end": "16:00:00"
+        },
+        {
+            "nama": "Budi Santoso",
+            "tanggal": "17 Maret 2024",
+            "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+            "start": "09:30:00",
+            "end": "17:00:00"
+        },
+        {
+            "nama": "Citra Lestari",
+            "tanggal": "18 Maret 2024",
+            "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+            "start": "10:00:00",
+            "end": "18:00:00"
+        },
+        {
+            "nama": "Fajar Nugraha",
+            "tanggal": "19 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:10:00",
+            "end": "16:00:00"
+        },
+        {
+            "nama": "Gina Safitri",
+            "tanggal": "20 Maret 2024",
+            "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+            "start": "09:45:00",
+            "end": "17:00:00"
+        },
+        {
+            "nama": "Hendra Setiawan",
+            "tanggal": "21 Maret 2024",
+            "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+            "start": "10:05:00",
+            "end": "18:00:00"
+        },
+        {
+            "nama": "Indah Permatasari",
+            "tanggal": "22 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:20:00",
+            "end": "16:00:00"
+        }
+    ];
 </script>

@@ -137,23 +137,13 @@
     </div>
 </template>
 
-<script>
+<script setup>
     import { ref } from 'vue';
-
-    export default {
-        setup() {
-            // toggle
-            const isCutiWrap = ref(true); // toggle sidebar: cuti
-            const isKaryawanWrap = ref(true); // toggle sidebar: karyawan
-            const isShiftWrap = ref(true); // toggle sidebar: shift
-
-            return {
-                isCutiWrap,
-                isKaryawanWrap,
-                isShiftWrap
-            };
-        }
-    };
+    
+    // toggle
+    const isCutiWrap = ref(true); // toggle sidebar: cuti
+    const isKaryawanWrap = ref(true); // toggle sidebar: karyawan
+    const isShiftWrap = ref(true); // toggle sidebar: shift
 </script>
 
 <style scoped>

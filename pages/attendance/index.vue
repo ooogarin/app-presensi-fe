@@ -76,20 +76,16 @@
                     <th class="px-2 py-4 w-28 text-slate-800">Aksi</th>
                 </tr>
                 <tr v-for="(item, index) in data" class="odd:bg-slate-100 even:bg-white border-b">
-                    <td class="px-2 py-4 border-r font-medium text-center text-slate-800">{{index + 1}}.</td>
-                    <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.nama}}</td>
-                    <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.tanggal}}</td>
-                    <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.shift}}</td>
-                    <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.start}}</td>
-                    <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.end}}</td>
-                    <td class="px-2 font-medium text-center text-slate-800">
-                        <button class="justify-center active:border-2 bg-slate-50 hover:bg-slate-100 border rounded-full">
-                            <NuxtLink :to="`/attendance/${index + 1}`">
-                                <div class="flex justify-center items-center w-10 h-10">
-                                    <UIcon name="i-heroicons-document-magnifying-glass" class="w-6 h-6 text-green-600" />
-                                </div>
-                            </NuxtLink>
-                        </button>
+                    <td class="px-2 py-4 border font-medium text-center text-slate-800">{{index + 1}}.</td>
+                    <td class="px-2 py-4 border font-medium text-slate-800">{{item.nama}}</td>
+                    <td class="px-2 py-4 border font-medium text-slate-800">{{item.tanggal}}</td>
+                    <td class="px-2 py-4 border font-medium text-slate-800">{{item.shift}}</td>
+                    <td class="px-2 py-4 border font-medium text-slate-800">{{item.start}}</td>
+                    <td class="px-2 py-4 border font-medium text-slate-800">{{item.end}}</td>
+                    <td class="px-2 font-medium text-slate-800">
+                        <NuxtLink :to="`/attendance/${index + 1}`" class="flex justify-center items-center bg-slate-50 hover:bg-slate-100 m-auto border rounded-full w-10 h-10">
+                            <UIcon name="i-heroicons-document-magnifying-glass" class="w-6 h-6 text-green-600" />
+                        </NuxtLink>
                     </td>
                 </tr>
                 <tr class="bg-white h-20">
@@ -134,219 +130,200 @@
   </div>
 </template>
 
-<script>
+<script setup>
     import { ref } from 'vue';
     import dayjs from 'dayjs';
+    
+    // toggle filter
+    const isFilterWrap = ref(false);
 
-    export default {
-        setup() {
-            // toggle filter
-            const isFilterWrap = ref(false);
+    // link breadcrumb
+    const linkBreadcrumb = [
+        {
+            label: 'Presensi',
+            icon: 'i-heroicons-pencil-square',
+            labelClass: 'text-blue-600 text-base font-semibold',
+            iconClass: 'text-blue-600'
+        },
+    ];
 
-            // link breadcrumb
-            const linkBreadcrumb = [
-                {
-                    label: 'Presensi',
-                    icon: 'i-heroicons-pencil-square',
-                    labelClass: 'text-blue-600 text-base font-semibold',
-                    iconClass: 'text-blue-600'
-                },
-            ];
-
-            // data select: date (datepicker)
-            const modeDatepicker = 'range'; // single | range
-            const selectedDate = ref((modeDatepicker == 'single')
-                ? '-'
-                : { start: '', end: '' }
-            );
-            const dataSelectDate = {
-                info: {
-                    label: "Pilih Periode Presensi",
-                    placeholder: "Pilih Periode Presensi"
-                },
-                data: (modeDatepicker == 'single')
-                    ? computed(() => selectedDate.value === "-" || selectedDate.value === null ? "-" : dayjs(selectedDate.value).format('DD-MM-YYYY'))
-                    : computed(() => selectedDate.value.start === "" || selectedDate.value.start === null ? "-" : (`${dayjs(selectedDate.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
-            }
-            // data select: division
-            const selectedDivision = ref('-');
-            const dataSelectDivision = {
-                info: {
-                    label: "Divisi",
-                    placeholder: "Pilih Semua Divisi"
-                },
-                options: [
-                    {
-                        value: 1,
-                        label: "Divisi 1"
-                    },
-                    {
-                        value: 2,
-                        label: "Divisi 2"
-                    },
-                    {
-                        value: 3,
-                        label: "Divisi 3"
-                    },
-                    {
-                        value: 4,
-                        label: "Divisi 4"
-                    },
-                    {
-                        value: 5,
-                        label: "Divisi 5"
-                    },
-                ]
-            };
-            // data select: shift
-            const selectedShift = ref('-');
-            const dataSelectShift = {
-                info: {
-                    label: "Shift",
-                    placeholder: "Pilih Semua Shift"
-                },
-                options: [
-                    {
-                        value: 1,
-                        label: "Shift 1"
-                    },
-                    {
-                        value: 2,
-                        label: "Shift 2"
-                    },
-                    {
-                        value: 3,
-                        label: "Shift 3"
-                    },
-                ]
-            };
-            // data select: account (personel)
-            const selectedAccount = ref('-');
-            const dataSelectAccount = {
-                info: {
-                    label: "Personel",
-                    placeholder: "Pilih Semua Personel"
-                },
-                options: [
-                    {
-                        value: 1,
-                        label: "Personel 1"
-                    },
-                    {
-                        value: 2,
-                        label: "Personel 2"
-                    },
-                    {
-                        value: 3,
-                        label: "Personel 3"
-                    },
-                    {
-                        value: 4,
-                        label: "Personel 4"
-                    },
-                    {
-                        value: 5,
-                        label: "Personel 5"
-                    },
-                    {
-                        value: 6,
-                        label: "Personel 6"
-                    },
-                    {
-                        value: 7,
-                        label: "Personel 7"
-                    },
-                ]
-            };
-
-            // data table
-            const data = [
-                {
-                    "nama": "Ilham Garin Nugroho",
-                    "tanggal": "13 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:15:00",
-                    "end": "16:00:00"
-                },
-                {
-                    "nama": "Alya Nadhira",
-                    "tanggal": "14 Maret 2024",
-                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                    "start": "09:00:00",
-                    "end": "17:00:00"
-                },
-                {
-                    "nama": "Raka Pratama",
-                    "tanggal": "15 Maret 2024",
-                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                    "start": "10:15:00",
-                    "end": "18:00:00"
-                },
-                {
-                    "nama": "Dina Maharani",
-                    "tanggal": "16 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:00:00",
-                    "end": "16:00:00"
-                },
-                {
-                    "nama": "Budi Santoso",
-                    "tanggal": "17 Maret 2024",
-                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                    "start": "09:30:00",
-                    "end": "17:00:00"
-                },
-                {
-                    "nama": "Citra Lestari",
-                    "tanggal": "18 Maret 2024",
-                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                    "start": "10:00:00",
-                    "end": "18:00:00"
-                },
-                {
-                    "nama": "Fajar Nugraha",
-                    "tanggal": "19 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:10:00",
-                    "end": "16:00:00"
-                },
-                {
-                    "nama": "Gina Safitri",
-                    "tanggal": "20 Maret 2024",
-                    "shift": "DMS - S2 (09:00 - 17:00) - NRM",
-                    "start": "09:45:00",
-                    "end": "17:00:00"
-                },
-                {
-                    "nama": "Hendra Setiawan",
-                    "tanggal": "21 Maret 2024",
-                    "shift": "DMS - S3 (10:00 - 18:00) - NRM",
-                    "start": "10:05:00",
-                    "end": "18:00:00"
-                },
-                {
-                    "nama": "Indah Permatasari",
-                    "tanggal": "22 Maret 2024",
-                    "shift": "DMS - S1 (08:00 - 16:00) - NRM",
-                    "start": "08:20:00",
-                    "end": "16:00:00"
-                }
-            ];
-
-            return {
-                isFilterWrap,
-                data,
-                linkBreadcrumb,
-                dataSelectDivision,
-                selectedDivision,
-                dataSelectShift,
-                selectedShift,
-                dataSelectAccount,
-                selectedAccount,
-                dataSelectDate,
-                selectedDate,
-                modeDatepicker,
-            };
-        }
+    // data select: date (datepicker)
+    const modeDatepicker = 'range'; // single | range
+    const selectedDate = ref((modeDatepicker == 'single')
+        ? '-'
+        : { start: '', end: '' }
+    );
+    const dataSelectDate = {
+        info: {
+            label: "Pilih Periode Presensi",
+            placeholder: "Pilih Periode Presensi"
+        },
+        data: (modeDatepicker == 'single')
+            ? computed(() => selectedDate.value === "-" || selectedDate.value === null ? "-" : dayjs(selectedDate.value).format('DD-MM-YYYY'))
+            : computed(() => selectedDate.value.start === "" || selectedDate.value.start === null ? "-" : (`${dayjs(selectedDate.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
+    }
+    // data select: division
+    const selectedDivision = ref('-');
+    const dataSelectDivision = {
+        info: {
+            label: "Divisi",
+            placeholder: "Pilih Semua Divisi"
+        },
+        options: [
+            {
+                value: 1,
+                label: "Divisi 1"
+            },
+            {
+                value: 2,
+                label: "Divisi 2"
+            },
+            {
+                value: 3,
+                label: "Divisi 3"
+            },
+            {
+                value: 4,
+                label: "Divisi 4"
+            },
+            {
+                value: 5,
+                label: "Divisi 5"
+            },
+        ]
     };
+    // data select: shift
+    const selectedShift = ref('-');
+    const dataSelectShift = {
+        info: {
+            label: "Shift",
+            placeholder: "Pilih Semua Shift"
+        },
+        options: [
+            {
+                value: 1,
+                label: "Shift 1"
+            },
+            {
+                value: 2,
+                label: "Shift 2"
+            },
+            {
+                value: 3,
+                label: "Shift 3"
+            },
+        ]
+    };
+    // data select: account (personel)
+    const selectedAccount = ref('-');
+    const dataSelectAccount = {
+        info: {
+            label: "Personel",
+            placeholder: "Pilih Semua Personel"
+        },
+        options: [
+            {
+                value: 1,
+                label: "Personel 1"
+            },
+            {
+                value: 2,
+                label: "Personel 2"
+            },
+            {
+                value: 3,
+                label: "Personel 3"
+            },
+            {
+                value: 4,
+                label: "Personel 4"
+            },
+            {
+                value: 5,
+                label: "Personel 5"
+            },
+            {
+                value: 6,
+                label: "Personel 6"
+            },
+            {
+                value: 7,
+                label: "Personel 7"
+            },
+        ]
+    };
+
+    // data table
+    const data = [
+        {
+            "nama": "Ilham Garin Nugroho",
+            "tanggal": "13 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:15:00",
+            "end": "16:00:00"
+        },
+        {
+            "nama": "Alya Nadhira",
+            "tanggal": "14 Maret 2024",
+            "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+            "start": "09:00:00",
+            "end": "17:00:00"
+        },
+        {
+            "nama": "Raka Pratama",
+            "tanggal": "15 Maret 2024",
+            "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+            "start": "10:15:00",
+            "end": "18:00:00"
+        },
+        {
+            "nama": "Dina Maharani",
+            "tanggal": "16 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:00:00",
+            "end": "16:00:00"
+        },
+        {
+            "nama": "Budi Santoso",
+            "tanggal": "17 Maret 2024",
+            "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+            "start": "09:30:00",
+            "end": "17:00:00"
+        },
+        {
+            "nama": "Citra Lestari",
+            "tanggal": "18 Maret 2024",
+            "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+            "start": "10:00:00",
+            "end": "18:00:00"
+        },
+        {
+            "nama": "Fajar Nugraha",
+            "tanggal": "19 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:10:00",
+            "end": "16:00:00"
+        },
+        {
+            "nama": "Gina Safitri",
+            "tanggal": "20 Maret 2024",
+            "shift": "DMS - S2 (09:00 - 17:00) - NRM",
+            "start": "09:45:00",
+            "end": "17:00:00"
+        },
+        {
+            "nama": "Hendra Setiawan",
+            "tanggal": "21 Maret 2024",
+            "shift": "DMS - S3 (10:00 - 18:00) - NRM",
+            "start": "10:05:00",
+            "end": "18:00:00"
+        },
+        {
+            "nama": "Indah Permatasari",
+            "tanggal": "22 Maret 2024",
+            "shift": "DMS - S1 (08:00 - 16:00) - NRM",
+            "start": "08:20:00",
+            "end": "16:00:00"
+        }
+    ];
 </script>
