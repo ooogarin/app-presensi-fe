@@ -26,8 +26,8 @@
             <!-- profile -->
             <div class="flex gap-4">
                 <div class="flex flex-col justify-center items-end">
-                    <span class="font-medium">My Name</span>
-                    <span>Frontend Developer</span>
+                    <span class="font-medium">{{ user ? user.name : "My Name" }}</span>
+                    <span>{{ user ? user.role : "My Role" }}</span>
                 </div>
                 <div class="flex justify-center items-center">
                     <button class="flex justify-center items-center border-slate-600 bg-slate-50 hover:bg-slate-100 border focus:outline-none focus:ring focus:ring-blue-300 active:bg-slate-100 rounded-full w-10 h-10">
@@ -40,3 +40,16 @@
         </div>
     </div>
 </template>
+
+<script setup>
+    // data from auth login
+    const userToken = useCookie('user');
+    let user = null;
+    if (userToken.value != null) {
+        user = {
+            token: userToken.value.token,
+            name: userToken.value.name,
+            role: userToken.value.role,
+        }
+    }
+</script>

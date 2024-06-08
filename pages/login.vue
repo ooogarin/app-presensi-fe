@@ -11,11 +11,11 @@
             </div>
             <div class="flex-1 h-2/4">
                 <div class="flex justify-center items-center">
-                    <form @submit.prevent="login" class="flex flex-col p-4 w-full h-full">
+                    <form @submit.prevent="handleLogin" class="flex flex-col p-4 w-full h-full">
                         <div class="flex flex-col h-[204px]">
                             <div class="flex flex-col gap-4">
                                 <div class="flex flex-col">
-                                    <label for="" class="mb-2 font-bold text-slate-800">Username</label>
+                                    <label class="mb-2 font-bold text-slate-800">Username</label>
                                     <div class="relative flex items-center">
                                         <input v-model="user.username" type="text" class="rounded-xl w-full h-12 font-medium cursor-text pe-16 ps-4 focus:outline-slate-600 ring-1 ring-slate-600 focus:outline-offset-1" placeholder="Username">
                                         <div class="right-0 absolute flex justify-center items-center rounded-xl w-12 h-full pointer-events-none round">
@@ -24,7 +24,7 @@
                                     </div>
                                 </div>
                                 <div class="flex flex-col">
-                                    <label for="" class="mb-2 font-bold text-slate-800">Password</label>
+                                    <label class="mb-2 font-bold text-slate-800">Password</label>
                                     <div class="relative flex items-center">
                                         <input v-model="user.password" :type="isHidePassword ? 'password' : 'text'" class="rounded-xl w-full h-12 font-medium cursor-text pe-16 ps-4 focus:outline-slate-600 ring-1 ring-slate-600 focus:outline-offset-1" placeholder="Password">
                                         <div @click="isHidePassword = !isHidePassword" class="right-0 absolute flex justify-center items-center hover:bg-slate-100 rounded-r-xl w-12 h-full cursor-pointer round">
@@ -41,12 +41,12 @@
                             </div>
                         </div>
                         <div class="flex flex-col h-[156px]">
-                            <label for="" class="mb-2 font-bold text-slate-800">Captcha</label>
+                            <label class="mb-2 font-bold text-slate-800">Captcha</label>
                             <div class="relative flex justify-evenly items-center gap-2 border-slate-600 p-2 border rounded-xl h-24">
                                 <div class="flex justify-center items-center px-4 py-2 rounded-xl w-1/3 h-full">
                                     <span>Text 123</span>
                                 </div>
-                                <!-- <button type="button" class="flex justify-center items-center border rounded-xl w-10 h-10">
+                                <!-- <button class="flex justify-center items-center border rounded-xl w-10 h-10">
                                     <UIcon name="i-heroicons-arrow-path-16-solid" ref="icon" class="w-6 h-6 text-slate-600 transition duration-500" />
                                 </button> -->
                                 <input type="text" class="border-slate-600 pr-12 pl-4 border rounded-xl w-1/2 h-12 font-medium focus:outline-slate-600 focus:outline-offset-1 cursor-pointer" placeholder="Captcha">
@@ -71,7 +71,8 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
+    // set cookie token
+    const userToken = useCookie('user');
 
     // toggle password
     const isHidePassword = ref(true);
@@ -87,8 +88,10 @@
         password: ''
     });
 
-    async function login() {
-        console.log('login: ', user.value);
+    const testa = ref('abc');
+
+    async function handleLogin() {
+        // console.log('login: ', user.value);
 
         // call API login
         // const { data: response, status } = await useFetch('http://localhost:3000/web/v1/login',{
@@ -110,6 +113,16 @@
         //     // redirect to dashboard
         //     navigateTo('/');
         // }
+
+        // set user data & token auth
+        userToken.value = {
+            token: 'token123',
+            name: 'Ilham Garin Nugroho',
+            role: 'UI/UX Designer',
+        };
+
+        console.log('+login :>> ', userToken.value);
+        await navigateTo('/');
     }
 
     definePageMeta({
