@@ -2,6 +2,8 @@
 import { useTokenStore } from '/stores/token';
 
 export const useLogin = async (dataUser) => {
+    const tokenStore = useTokenStore();
+    
     // call API login
     const { data: response, status } = await useFetch('http://localhost:3000/web/v1/login', {
         method: 'POST',
@@ -12,13 +14,13 @@ export const useLogin = async (dataUser) => {
     });
 
     if (status.value === "success") {
-        const tokenStore = useTokenStore();
-        
         // set user data & token auth
         tokenStore.storeToken({
             token: response.value.data[0].token,
             name: response.value.data[0].name,
             role: response.value.data[0].role,
+            username: dataUser.value.username,
+            password: dataUser.value.password,
         });
 
         // redirect to dashboard

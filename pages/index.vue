@@ -4,7 +4,7 @@
         <!-- <ButtonBase label="Button" mode="solid"/> -->
 
         <div class="flex flex-col gap-8 bg-white shadow p-6 rounded-xl w-full">
-            <NuxtLink to="/login" class="w-fit">
+            <NuxtLink class="w-fit">
                 <ButtonBase @click="handleLogout" label="Logout" />
             </NuxtLink>
 
@@ -29,6 +29,11 @@ if (tokenStore.dataUser != null) {
 
 function handleLogout() {
     tokenStore.clearToken();
+    navigateTo('/login');
     console.log('+logout :>> ', tokenStore.dataUser);
 }
+
+definePageMeta({
+    middleware: 'auth'
+});
 </script>

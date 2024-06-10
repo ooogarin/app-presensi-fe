@@ -9,7 +9,9 @@ export const useTokenStore = defineStore('token', () => {
         dataUser.value = {
             token: data.token,
             name: data.name,
-            role: data.role
+            role: data.role,
+            username: data.username,
+            password: data.password,
         }
 
         // store dataUser to cookie

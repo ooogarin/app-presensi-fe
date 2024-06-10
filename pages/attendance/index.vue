@@ -318,4 +318,8 @@
             "end": "16:00:00"
         }
     ];
+
+    definePageMeta({
+        middleware: 'auth'
+    });
 </script>
