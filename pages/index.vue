@@ -14,9 +14,7 @@
 </template>
 
 <script setup>
-// pinia
 import { useTokenStore } from '/stores/token';
-
 const tokenStore = useTokenStore();
 
 // data from auth login

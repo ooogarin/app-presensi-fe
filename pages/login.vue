@@ -76,46 +76,15 @@
     // toggle password
     const isHidePassword = ref(true);
 
-    const router = useRouter();
-    const handleSubmit = () => {
-        router.push('/attendance');
-    }
-
-    // --- auth login ---
+    // store login form
     const user = ref({
         username: '',
         password: ''
     });
 
     async function handleLogin() {
-        // call API login
-        const { data: response, status } = await useFetch('http://localhost:3000/web/v1/login',{
-            method: 'POST',
-            body: {
-                username: user.value.username,
-                password: user.value.password,
-            },
-        });
-
-        // console.log('response :>> ', response);
-        // console.log('response status :>> ', status);
-
-        if (status.value === "error") {
-            console.log('login gagal');
-        } else {  
-            const tokenStore = useTokenStore();
-            
-            // set user data & token auth
-            tokenStore.storeToken({
-                token: response.value.data[0].token,
-                name: response.value.data[0].name,
-                role: response.value.data[0].role,
-            });
-
-            // redirect to dashboard
-            console.log('login berhasil');
-            navigateTo('/');
-        }
+        // check credentials
+        useLogin(user);
     }
 
     definePageMeta({
