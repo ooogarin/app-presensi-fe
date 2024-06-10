@@ -71,8 +71,7 @@
 </template>
 
 <script setup>
-    // set cookie token
-    const userToken = useCookie('user');
+    import { useTokenStore } from '/stores/token';
 
     // toggle password
     const isHidePassword = ref(true);
@@ -88,41 +87,35 @@
         password: ''
     });
 
-    const testa = ref('abc');
-
     async function handleLogin() {
-        // console.log('login: ', user.value);
-
         // call API login
-        // const { data: response, status } = await useFetch('http://localhost:3000/web/v1/login',{
-        //     method: 'POST',
-        //     body: {
-        //         username: user.value.username,
-        //         password: user.value.password,
-        //     },
-        // });
+        const { data: response, status } = await useFetch('http://localhost:3000/web/v1/login',{
+            method: 'POST',
+            body: {
+                username: user.value.username,
+                password: user.value.password,
+            },
+        });
 
-        // // console.log('response :>> ', response);
-        // // console.log('response status :>> ', status);
+        // console.log('response :>> ', response);
+        // console.log('response status :>> ', status);
 
-        // if (status.value === "error") {
-        //     console.log('login gagal');
-        // } else {
-        //     console.log('login berhasil');
+        if (status.value === "error") {
+            console.log('login gagal');
+        } else {  
+            const tokenStore = useTokenStore();
+            
+            // set user data & token auth
+            tokenStore.storeToken({
+                token: response.value.data[0].token,
+                name: response.value.data[0].name,
+                role: response.value.data[0].role,
+            });
 
-        //     // redirect to dashboard
-        //     navigateTo('/');
-        // }
-
-        // set user data & token auth
-        userToken.value = {
-            token: 'token123',
-            name: 'Ilham Garin Nugroho',
-            role: 'UI/UX Designer',
-        };
-
-        console.log('+login :>> ', userToken.value);
-        await navigateTo('/');
+            // redirect to dashboard
+            console.log('login berhasil');
+            navigateTo('/');
+        }
     }
 
     definePageMeta({

@@ -1,30 +1,36 @@
 <template>
-    <div class="flex flex-col items-center space-y-4 px-8 py-4 border w-full overflow-y-auto">
+    <div class="flex flex-col space-y-4 px-8 py-4 w-full overflow-y-auto">
         <!-- <h1>This is content</h1> -->
         <!-- <ButtonBase label="Button" mode="solid"/> -->
 
-        <NuxtLink to="/login">
-            <ButtonBase @click="handleLogout" label="Logout" />
-        </NuxtLink>
+        <div class="flex flex-col gap-8 bg-white shadow p-6 rounded-xl w-full">
+            <NuxtLink to="/login" class="w-fit">
+                <ButtonBase @click="handleLogout" label="Logout" />
+            </NuxtLink>
 
-        <h1>Token: {{ user ? user.token : "no token" }}</h1>
+            <h1 class="p-4 border w-96 overflow-auto">Token: {{ user ? user.token : "no token" }}</h1>
+        </div>
     </div>
 </template>
 
 <script setup>
-    // data from auth login
-    const userToken = useCookie('user');
-    let user = null;
-    if (userToken.value != null) {
-        user = {
-            token: userToken.value.token,
-            name: userToken.value.name,
-            role: userToken.value.role,
-        }
-    }
+// pinia
+import { useTokenStore } from '/stores/token';
 
-    function handleLogout() {
-        userToken.value = null;
-        console.log('+logout :>> ', userToken.value);
+const tokenStore = useTokenStore();
+
+// data from auth login
+let user = null;
+if (tokenStore.dataUser != null) {
+    user = {
+        token: tokenStore.dataUser.token,
+        name: tokenStore.dataUser.name,
+        role: tokenStore.dataUser.role,
     }
+}
+
+function handleLogout() {
+    tokenStore.clearToken();
+    console.log('+logout :>> ', tokenStore.dataUser);
+}
 </script>
