@@ -20,6 +20,7 @@ export const useTokenStore = defineStore('token', () => {
 
     // clear token
     function clearToken() {
+        // clear dataUser from pinia store
         dataUser.value = null;
 
         // clear dataUser from cookie

@@ -1,4 +1,3 @@
-// pinia
 import { useTokenStore } from '/stores/token';
 
 export const useLogin = async (dataUser) => {

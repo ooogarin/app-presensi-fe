@@ -32,8 +32,4 @@ function handleLogout() {
     navigateTo('/login');
     console.log('+logout :>> ', tokenStore.dataUser);
 }
-
-definePageMeta({
-    middleware: 'auth'
-});
 </script>
