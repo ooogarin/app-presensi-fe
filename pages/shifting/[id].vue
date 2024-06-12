@@ -2,7 +2,7 @@
     <div class="flex flex-col space-y-4 px-8 pt-4 pb-12 w-full overflow-y-auto">
         <!-- title page -->
         <div class="p-4 w-full">
-            <h1 class="mb-2 font-bold text-3xl">Detail Shift</h1>
+            <h1 class="mb-2 font-bold text-3xl">Detail Shifting</h1>
             <div class="flex space-x-1">
                 <UBreadcrumb :links="linkBreadcrumb">
                     <template #default="{ link, isActive, index }">
@@ -69,7 +69,7 @@
                     <div class="flex flex-col gap-4 p-4 w-1/2 text-lg">
                         <div class="flex justify-between gap-2 w-full">
                             <span class="text-slate-600">Jam Mulai</span>
-                            <span>21.00</span>
+                            <span class="font-semibold text-slate-800">21.00</span>
                         </div>
                         <div class="flex justify-between gap-2 w-full">
                             <span class="text-slate-600">Batas Maksimal Sebelum Jam Mulai</span>
@@ -92,7 +92,7 @@
                     <div class="flex flex-col gap-4 p-4 w-1/2 text-lg">
                         <div class="flex justify-between gap-2 w-full">
                             <span class="text-slate-600">Jam Selesai</span>
-                            <span>03.00</span>
+                            <span class="font-semibold text-slate-800">03.00</span>
                         </div>
                         <div class="flex justify-between gap-2 w-full">
                             <span class="text-slate-600">Batas Maksimal Sebelum Jam Selesai</span>

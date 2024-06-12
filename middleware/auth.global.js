@@ -6,12 +6,12 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
     // no auth
     if (!isAuth) {
-        console.log('unauthenticated');
+        // console.log('unauthenticated');
         
         if (to.fullPath !== "/login") {
             return navigateTo('/login');
         }
     } else {
-        console.log('authenticated');
+        // console.log('authenticated');
     }
 });

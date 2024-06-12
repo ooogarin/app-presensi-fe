@@ -34,7 +34,7 @@
                 class="transition-all duration-500 overflow-hidden">
                 <!-- list filter -->
                 <div class="gap-6 grid grid-cols-12 p-6 w-full">
-                    <InputDatePicker v-model="selectedDate" :dataSelect="dataSelectDate" :mode="modeDatepicker"
+                    <InputDatePicker v-model="selectedDate" :dataSelect="dataSelectDate" mode="range"
                         class="flex flex-col col-span-4 w-full" />
                     <InputSelect v-model="selectedDivision" :dataSelect="dataSelectDivision"
                         class="flex flex-col col-span-4 w-full" />
@@ -43,12 +43,12 @@
                     <InputSelect v-model="selectedAccount" :dataSelect="dataSelectAccount"
                         class="flex flex-col col-span-12 w-full" />
                 </div>
-
+            
                 <!-- button submit -->
                 <div class="flex justify-end space-x-6 mb-1 px-8">
-                    <button
+                    <button @click="handleResetFilter"
                         class="border-2 bg-slate-50 hover:bg-slate-100 focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-100 px-4 py-2 border-blue-600 rounded-xl w-32 h-12 font-medium text-blue-600">Reset</button>
-                    <button
+                    <button @click="handleSubmitFilter"
                         class="bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-300 active:bg-blue-800 px-4 py-2 rounded-xl w-32 h-12 font-medium text-slate-50">Submit</button>
                 </div>
             </div>
@@ -82,7 +82,10 @@
                         <th class="px-2 py-4 border-r text-slate-800">Jam Selesai</th>
                         <th class="px-2 py-4 w-28 text-slate-800">Aksi</th>
                     </tr>
-                    <tr v-for="(item, index) in dataTable" class="odd:bg-slate-100 even:bg-white border-b">
+                    <tr v-if="pending.value" class="odd:bg-slate-100 even:bg-white border-b">
+                        <td colspan="7" class="px-2 py-4 border-r font-medium text-center text-slate-800">Loading...</td>
+                    </tr>
+                    <tr v-else v-for="(item, index) in dataTable" class="odd:bg-slate-100 even:bg-white border-b">
                         <td class="px-2 py-4 border-r font-medium text-center text-slate-800">{{ index + 1 }}.</td>
                         <td class="px-2 py-4 border-r font-medium text-slate-800">{{ item.nama }}</td>
                         <td class="px-2 py-4 border-r font-medium text-slate-800">{{ item.tanggal }}</td>
@@ -148,8 +151,10 @@
 </template>
 
 <script setup>
-import { useApiAttendance } from '/composables/useApiAttendance';
+import { useTokenStore } from '/stores/token';
 import dayjs from 'dayjs';
+import { useApiAttendance } from '/composables/useApiAttendance';
+import { useFormatDate } from '/composables/useFormatDate';
 
 // toggle filter
 const isFilterWrap = ref(true);
@@ -164,22 +169,16 @@ const linkBreadcrumb = [
     },
 ];
 
-// data select: date (datepicker)
-const modeDatepicker = 'range'; // single | range
-const selectedDate = ref((modeDatepicker == 'single')
-    ? '-'
-    : { start: '', end: '' }
-);
+// 1. data select: date (datepicker)
+const selectedDate = ref({ start: '', end: '' });
 const dataSelectDate = {
     info: {
         label: "Pilih Periode Presensi",
         placeholder: "Pilih Periode Presensi"
     },
-    data: (modeDatepicker == 'single')
-        ? computed(() => selectedDate.value === "-" || selectedDate.value === null ? "-" : dayjs(selectedDate.value).format('DD-MM-YYYY'))
-        : computed(() => selectedDate.value.start === "" || selectedDate.value.start === null ? "-" : (`${dayjs(selectedDate.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
+    data: computed(() => selectedDate.value.start === "" || selectedDate.value.start === null ? "-" : (`${dayjs(selectedDate.value.start).format('DD-MM-YYYY')} - ${dayjs(selectedDate.value.end).format('DD-MM-YYYY')}`))
 }
-// data select: division
+// 2. data select: division
 const selectedDivision = ref('-');
 const dataSelectDivision = {
     info: {
@@ -209,7 +208,7 @@ const dataSelectDivision = {
         },
     ]
 };
-// data select: shift
+// 3. data select: shift
 const selectedShift = ref('-');
 const dataSelectShift = {
     info: {
@@ -231,7 +230,7 @@ const dataSelectShift = {
         },
     ]
 };
-// data select: account (personel)
+// 4. data select: account (personel)
 const selectedAccount = ref('-');
 const dataSelectAccount = {
     info: {
@@ -270,11 +269,104 @@ const dataSelectAccount = {
     ]
 };
 
-const dataTable = await useApiAttendance();
-if (dataTable.length > 0) {
-    console.log("data ada: ", dataTable.length);
-} else {
-    console.log("data tidak ada: ", dataTable.length);
+
+
+// filter (payload)
+const filterPayload = ref({
+    start: "-",
+    end: "-",
+    id_division: "-",
+    id_shifting: "-",
+    id_account: [],
+    id_admin: []
+});
+
+// data from API BE (attendance)
+const getDataAttendance = (filterPayload) => {
+    const tokenStore = useTokenStore();
+    const token = tokenStore.dataUser.token;
+
+    // call API login
+    const { data: response, status, pending } = useFetch('http://localhost:3000/web/v1/attendance/get-attendance', {
+        lazy: true,
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        body: {
+            start: filterPayload.start,
+            end: filterPayload.end,
+            id_division: filterPayload.id_division,
+            id_shifting: filterPayload.id_shifting,
+            id_account: filterPayload.id_account,
+            id_admin: filterPayload.id_admin,
+        },
+    });
+
+    let data;
+    if (status.value === "success") {
+        data = response.value.data.map((item) => {
+            const newFormat = {
+                nama: item.schedule.account.lname_user,
+                tanggal: item.date_attend === '-' ? "-" : useFormatDate(dayjs(item.date_attend, 'YYYY-MM-DD').format('DD-MM-YYYY')),
+                shifting: `${item.schedule.shifting.division.division_sname} - ${item.schedule.shifting.shifting_shift_turn.turn_sname} (${item.schedule.shifting.shift_start} - ${item.schedule.shifting.shift_end}) - ${item.schedule.shifting.shifting_shift_type.type_sname}`,
+                start: item.attendance_start,
+                end: item.attendance_end,
+                isPassDay: (item.date_attend_end > item.date_attend_start) ? true : false, // jika tanggal presensi selesai lebih besar dari tanggal presensi mulai
+                id_schedule: item.schedule.id_schedule // untuk detail action
+            }
+
+            return newFormat;
+        });
+    } else {
+        data = [];
+    }
+
+    return { data, pending };
 }
 
+// store data
+const dataTable = ref();
+const pending = ref();
+
+const dataAttendance = getDataAttendance(filterPayload.value);
+dataTable.value = dataAttendance.data;
+pending.value = dataAttendance.pending;
+
+
+
+// handle submit filter
+const handleSubmitFilter = () => {
+    filterPayload.value = {
+        start: selectedDate.value.start === '' ? '-' : dayjs(selectedDate.value.start).format('YYYY-MM-DD'),
+        end: selectedDate.value.end === '' ? '-' : dayjs(selectedDate.value.end).format('YYYY-MM-DD'),
+        id_division: selectedDivision.value,
+        id_shifting: selectedShift.value,
+        id_account: selectedAccount.value,
+    }
+    console.log('Submit filter :>> ', toRaw(filterPayload.value));
+}
+
+// handle reset filter
+const handleResetFilter = () => {
+    selectedDate.value = { start: '', end: ''};
+    selectedDivision.value = '-';
+    selectedShift.value = '-';
+    selectedAccount.value = '-';
+
+    filterPayload.value = {
+        start: selectedDate.value.start,
+        end: selectedDate.value.end,
+        id_division: selectedDivision.value,
+        id_shifting: selectedShift.value,
+        id_account: selectedAccount.value,
+    }
+
+    console.log('Reset filter :>> ', filterPayload.value);
+}
+
+
+// data table
+// const dataApi = await useApiAttendance();
+// const dataTable = dataApi.data;
 </script>
