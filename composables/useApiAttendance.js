@@ -2,27 +2,24 @@ import { useTokenStore } from '/stores/token';
 import dayjs from 'dayjs';
 import { useFormatDate } from '/composables/useFormatDate';
 
-export const useApiAttendance = async () => {
+export const useApiAttendance = (filterPayload) => {
     const tokenStore = useTokenStore();
     const token = tokenStore.dataUser.token;
 
     // call API login
-    const { data: response, status, pending } = await useFetch('http://localhost:3000/web/v1/attendance/get-attendance', {
+    const { data: response, status, pending } = useFetch('http://localhost:3000/web/v1/attendance/get-attendance', {
+        lazy: true,
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`
         },
         body: {
-            start: "-", // date or "-" (filter periode start)
-            end: "-", // date or "-" (filter periode end)
-            id_division: "-",
-            id_shifting: "-",
-            id_account: [
-                // "6f19b682-8039-4540-983a-34f0febf3b07"
-            ],
-            id_admin: [
-                // "6f19b682-8039-4540-983a-34f0febf3b07"
-            ]
+            start: filterPayload.start,
+            end: filterPayload.end,
+            id_division: filterPayload.id_division,
+            id_shifting: filterPayload.id_shifting,
+            id_account: filterPayload.id_account,
+            id_admin: filterPayload.id_admin,
         },
     });
 
@@ -44,6 +41,8 @@ export const useApiAttendance = async () => {
     } else {
         data = [];
     }
+
+    console.log('api :>> ', 123);
 
     return { data, pending };
 }

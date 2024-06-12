@@ -2,7 +2,7 @@
     <div class="flex flex-col space-y-4 px-8 pt-4 pb-12 w-full overflow-y-auto">
         <!-- title page -->
         <div class="p-4 w-full">
-            <h1 class="mb-2 font-bold text-3xl">Detail KPI Personel</h1>
+            <h1 class="mb-2 font-bold text-3xl">Detail Data Cuti</h1>
             <div class="flex space-x-1">
                 <UBreadcrumb :links="linkBreadcrumb">
                     <template #default="{ link, isActive, index }">
@@ -21,8 +21,8 @@
                 <!-- header -->
                 <div class="flex justify-between items-center">  
                     <div class="flex items-center gap-2">
-                        <UIcon name="i-heroicons-calendar" class="w-6 h-6 text-blue-600" />
-                        <span class="font-bold text-xl">Informasi KPI Personel</span>
+                        <UIcon name="i-heroicons-folder" class="w-6 h-6 text-blue-600" />
+                        <span class="font-bold text-xl">Informasi Data Cuti</span>
                     </div>
                 </div>
                 <!-- body -->
@@ -32,16 +32,16 @@
                         <span class="text-slate-800">Ilham Garin Nugroho</span>
                     </div>
                     <div class="flex flex-col gap-2 font-medium">
-                        <span class="text-slate-600">Total Lembur Aktual</span>
-                        <span class="text-slate-800">700 Menit</span>
+                        <span class="text-slate-600">Role</span>
+                        <span class="text-slate-800">Mobile Developer</span>
                     </div>
                     <div class="flex flex-col gap-2 font-medium">
-                        <span class="text-slate-600">Total Lembur Terhitung</span>
-                        <span class="text-slate-800">10 Jam</span>
+                        <span class="text-slate-600">Total Cuti Tahunan</span>
+                        <span class="text-slate-800">7 Hari</span>
                     </div>
                     <div class="flex flex-col gap-2 font-medium">
-                        <span class="text-slate-600">Keterlambatan</span>
-                        <span class="text-slate-800">210 Menit</span>
+                        <span class="text-slate-600">Sisa Cuti Tahunan</span>
+                        <span class="text-slate-800">13 Hari</span>
                     </div>
                 </div>
             </div>
@@ -50,8 +50,8 @@
             <div class="flex flex-col space-y-6 bg-white shadow p-8 rounded-xl w-full">
                 <div class="flex justify-between">
                     <div class="flex items-center gap-2">
-                        <UIcon name="i-heroicons-user" class="w-6 h-6 text-blue-600" />      
-                        <span class="font-bold text-xl">Data KPI Personel</span>    
+                        <UIcon name="i-heroicons-folder" class="w-6 h-6 text-blue-600" />      
+                        <span class="font-bold text-xl">Riwayat Pengajuan Cuti</span>    
                     </div>
                     <ButtonBase label="Export" icon="i-flowbite-printer-outline" />
                 </div>
@@ -59,17 +59,19 @@
                     <table class="border-collapse w-full">
                         <tr class="bg-slate-100 border-b">
                             <th class="px-2 py-4 border-r w-14 text-slate-800">No.</th>
-                            <th class="px-2 py-4 border-r text-slate-800">Tanggal</th>
-                            <th class="px-2 py-4 border-r text-slate-800">Lembur Aktual</th>
-                            <th class="px-2 py-4 border-r text-slate-800">Lembur Terhitung</th>
-                            <th class="px-2 py-4 border-r text-slate-800">Keterlambatan</th>
+                            <th class="px-2 py-4 border-r text-slate-800">Pengajuan</th>
+                            <th class="px-2 py-4 border-r text-slate-800">Jenis Cuti</th>
+                            <th class="px-2 py-4 border-r text-slate-800">Periode Cuti</th>
+                            <th class="px-2 py-4 border-r text-slate-800">Lama Cuti</th>
+                            <th class="px-2 py-4 border-r text-slate-800">Status</th>
                         </tr>
                         <tr v-for="(item, index) in dataTable" class="odd:bg-slate-100 even:bg-white border-b">
                             <td class="px-2 py-4 border-r font-medium text-center text-slate-800">{{index + 1}}.</td>
-                            <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.tanggal}}</td>
-                            <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.lembur_aktual}}</td>
-                            <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.lembur_terhitung}}</td>
-                            <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.keterlambatan}}</td>
+                            <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.tanggal_pengajuan}}</td>
+                            <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.jenis_cuti}}</td>
+                            <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.periode_cuti}}</td>
+                            <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.lama_cuti}}</td>
+                            <td class="px-2 py-4 border-r font-medium text-slate-800">{{item.status}}</td>
                         </tr>
                         <tr class="bg-white h-20">
                             <td class="px-2 py-4" colspan="7">
@@ -118,14 +120,14 @@
     // link breadcrumb
     const linkBreadcrumb = [
         {
-            label: 'KPI Personel',
-            to: '/kpi',
-            icon: 'i-heroicons-user',
+            label: 'Data Cuti',
+            to: '/cuti-data',
+            icon: 'i-heroicons-folder',
             labelClass: 'text-slate-600 text-base font-semibold',
             iconClass: 'text-slate-600'
         },
         {
-            label: 'Detail Shifting',
+            label: 'Detail Data Cuti',
             labelClass: 'text-blue-600 text-base font-semibold',
             iconClass: 'text-blue-600'
         },
@@ -134,64 +136,74 @@
     // data table
     const dataTable = [
         {
-            "tanggal": "13 Maret 2024",
-            "lembur_aktual": "220 Menit",
-            "lembur_terhitung": "3 Jam",
-            "keterlambatan": "20 Menit"
+            tanggal_pengajuan: "13 Maret 2024",
+            jenis_cuti: "Cuti Liburan",
+            periode_cuti: "13, 14, 15 Juni",
+            lama_cuti: "3 Hari",
+            status: "Disetujui"
         },
         {
-            "tanggal": "14 Maret 2024",
-            "lembur_aktual": "220 Menit",
-            "lembur_terhitung": "3 Jam",
-            "keterlambatan": "20 Menit"
+            tanggal_pengajuan: "14 Maret 2024",
+            jenis_cuti: "Cuti Liburan",
+            periode_cuti: "13, 14, 15 Juni",
+            lama_cuti: "3 Hari",
+            status: "Ditolak"
         },
         {
-            "tanggal": "15 Maret 2024",
-            "lembur_aktual": "220 Menit",
-            "lembur_terhitung": "3 Jam",
-            "keterlambatan": "20 Menit"
+            tanggal_pengajuan: "15 Maret 2024",
+            jenis_cuti: "Cuti Liburan",
+            periode_cuti: "13, 14, 15 Juni",
+            lama_cuti: "3 Hari",
+            status: "Menunggu Persetujuan"
         },
         {
-            "tanggal": "16 Maret 2024",
-            "lembur_aktual": "220 Menit",
-            "lembur_terhitung": "3 Jam",
-            "keterlambatan": "20 Menit"
+            tanggal_pengajuan: "16 Maret 2024",
+            jenis_cuti: "Cuti Liburan",
+            periode_cuti: "13, 14, 15 Juni",
+            lama_cuti: "3 Hari",
+            status: "Disetujui"
         },
         {
-            "tanggal": "17 Maret 2024",
-            "lembur_aktual": "220 Menit",
-            "lembur_terhitung": "3 Jam",
-            "keterlambatan": "20 Menit"
+            tanggal_pengajuan: "17 Maret 2024",
+            jenis_cuti: "Cuti Liburan",
+            periode_cuti: "13, 14, 15 Juni",
+            lama_cuti: "3 Hari",
+            status: "Disetujui"
         },
         {
-            "tanggal": "18 Maret 2024",
-            "lembur_aktual": "220 Menit",
-            "lembur_terhitung": "3 Jam",
-            "keterlambatan": "20 Menit"
+            tanggal_pengajuan: "18 Maret 2024",
+            jenis_cuti: "Cuti Liburan",
+            periode_cuti: "13, 14, 15 Juni",
+            lama_cuti: "3 Hari",
+            status: "Disetujui"
         },
         {
-            "tanggal": "19 Maret 2024",
-            "lembur_aktual": "220 Menit",
-            "lembur_terhitung": "3 Jam",
-            "keterlambatan": "20 Menit"
+            tanggal_pengajuan: "19 Maret 2024",
+            jenis_cuti: "Cuti Liburan",
+            periode_cuti: "13, 14, 15 Juni",
+            lama_cuti: "3 Hari",
+            status: "Disetujui"
         },
         {
-            "tanggal": "20 Maret 2024",
-            "lembur_aktual": "220 Menit",
-            "lembur_terhitung": "3 Jam",
-            "keterlambatan": "20 Menit"
+            tanggal_pengajuan: "20 Maret 2024",
+            jenis_cuti: "Cuti Liburan",
+            periode_cuti: "13, 14, 15 Juni",
+            lama_cuti: "3 Hari",
+            status: "Disetujui"
         },
         {
-            "tanggal": "21 Maret 2024",
-            "lembur_aktual": "220 Menit",
-            "lembur_terhitung": "3 Jam",
-            "keterlambatan": "20 Menit"
+            tanggal_pengajuan: "21 Maret 2024",
+            jenis_cuti: "Cuti Liburan",
+            periode_cuti: "13, 14, 15 Juni",
+            lama_cuti: "3 Hari",
+            status: "Disetujui"
         },
         {
-            "tanggal": "22 Maret 2024",
-            "lembur_aktual": "220 Menit",
-            "lembur_terhitung": "3 Jam",
-            "keterlambatan": "20 Menit"
+            tanggal_pengajuan: "22 Maret 2024",
+            jenis_cuti: "Cuti Liburan",
+            periode_cuti: "13, 14, 15 Juni",
+            lama_cuti: "3 Hari",
+            status: "Disetujui"
         }
     ];
 </script>

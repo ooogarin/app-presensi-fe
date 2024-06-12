@@ -325,27 +325,32 @@ const getDataAttendance = (filterPayload) => {
     return { data, pending };
 }
 
-// store data
+// store data from API
 const dataTable = ref();
 const pending = ref();
 
 const dataAttendance = getDataAttendance(filterPayload.value);
+// const dataAttendance = useApiAttendance(filterPayload.value); use composable
 dataTable.value = dataAttendance.data;
 pending.value = dataAttendance.pending;
 
-
-
 // handle submit filter
-const handleSubmitFilter = () => {
+const handleSubmitFilter = async () => {
     filterPayload.value = {
         start: selectedDate.value.start === '' ? '-' : dayjs(selectedDate.value.start).format('YYYY-MM-DD'),
         end: selectedDate.value.end === '' ? '-' : dayjs(selectedDate.value.end).format('YYYY-MM-DD'),
         id_division: selectedDivision.value,
         id_shifting: selectedShift.value,
-        id_account: selectedAccount.value,
+        id_account: selectedAccount.value === '-' ? [] : [],
+        id_admin: []
     }
+
     console.log('Submit filter :>> ', toRaw(filterPayload.value));
 }
+
+watch(dataTable.value, (newValue) => {
+    console.log('newValue :>> ', newValue);  
+})
 
 // handle reset filter
 const handleResetFilter = () => {
@@ -364,9 +369,4 @@ const handleResetFilter = () => {
 
     console.log('Reset filter :>> ', filterPayload.value);
 }
-
-
-// data table
-// const dataApi = await useApiAttendance();
-// const dataTable = dataApi.data;
 </script>
