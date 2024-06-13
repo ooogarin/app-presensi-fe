@@ -129,7 +129,7 @@
                 <li>
                     <NuxtLink to="/report" class="flex gap-4 hover:bg-slate-100 px-4 py-3 rounded-xl text-slate-600 stroke-slate-600">
                         <IconsDownload class="h-6 stroke-2"/>
-                        <span class="font-bold text-left grow">Laporan</span>
+                        <span class="font-bold text-left grow">Download Laporan</span>
                     </NuxtLink>
                 </li>
             </ul>

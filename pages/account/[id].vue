@@ -31,9 +31,8 @@
                 </div>
                 <!-- body -->
                 <div class="gap-8 gap-y-8 border-y grid grid-cols-5 p-8 text-lg">
-                    <div class="flex flex-col gap-2 font-medium">
-                        <span class="text-slate-600">Foto</span>
-                        <span>123</span>
+                    <div class="flex flex-col gap-2 row-span-2 border font-medium">
+                        <img src="/img/logo.png" alt="Foto Profil" class="w-full"/>
                     </div>
                     <div class="flex flex-col gap-2 font-medium">
                         <span class="text-slate-600">Nama</span>
