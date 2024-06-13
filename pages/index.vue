@@ -59,16 +59,16 @@ function handleLogout() {
 
 const products = ref();
 const pending = ref();
-const { data: dataProducts, pending: dataPending } = useFetch('https://fakestoreapi.com/products', {
-    lazy:true
-});
-products.value = dataProducts;
-pending.value = dataPending;
+// const { data: dataProducts, pending: dataPending } = useFetch('https://fakestoreapi.com/products', {
+//     lazy: true
+// });
+// products.value = dataProducts;
+// pending.value = dataPending;
+// console.log('main :>> ');
+
 
 const sortingDataAsc = () => {
-    const { data: dataByFilter, pending: dataByFilterPending } = useFetch('https://fakestoreapi.com/products', {
-        lazy:true
-    });
+    const { data: dataByFilter, pending: dataByFilterPending } = useFetch('https://fakestoreapi.com/products');
     products.value = dataByFilter;
     pending.value = dataByFilterPending;
 
@@ -76,15 +76,15 @@ const sortingDataAsc = () => {
 }
 
 const sortingDataDesc = () => {
-    const { data: dataByFilter, pending: dataByFilterPending } = useFetch('https://fakestoreapi.com/products?sort=desc', {
-        lazy:true
-    });
+    const { data: dataByFilter, pending: dataByFilterPending } = useFetch('https://fakestoreapi.com/products?sort=desc');
     products.value = dataByFilter;
     pending.value = dataByFilterPending;
 
     console.log("sorting descending");
 }
 
+// load when open this page
+sortingDataAsc();
 
 
 </script>

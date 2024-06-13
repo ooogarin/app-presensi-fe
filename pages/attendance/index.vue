@@ -82,7 +82,7 @@
                         <th class="px-2 py-4 border-r text-slate-800">Jam Selesai</th>
                         <th class="px-2 py-4 w-28 text-slate-800">Aksi</th>
                     </tr>
-                    <tr v-if="pending.value" class="odd:bg-slate-100 even:bg-white border-b">
+                    <tr v-if="dataPending.value" class="odd:bg-slate-100 even:bg-white border-b">
                         <td colspan="7" class="px-2 py-4 border-r font-medium text-center text-slate-800">Loading...</td>
                     </tr>
                     <tr v-else v-for="(item, index) in dataTable" class="odd:bg-slate-100 even:bg-white border-b">
@@ -153,7 +153,6 @@
 <script setup>
 import { useTokenStore } from '/stores/token';
 import dayjs from 'dayjs';
-import { useApiAttendance } from '/composables/useApiAttendance';
 import { useFormatDate } from '/composables/useFormatDate';
 
 // toggle filter
@@ -169,6 +168,9 @@ const linkBreadcrumb = [
     },
 ];
 
+
+
+// ----- store filter -----
 // 1. data select: date (datepicker)
 const selectedDate = ref({ start: '', end: '' });
 const dataSelectDate = {
@@ -271,7 +273,9 @@ const dataSelectAccount = {
 
 
 
-// filter (payload)
+// ----- data table -----
+const dataTable = ref([]);
+const dataPending = ref(true);
 const filterPayload = ref({
     start: "-",
     end: "-",
@@ -282,12 +286,12 @@ const filterPayload = ref({
 });
 
 // data from API BE (attendance)
-const getDataAttendance = (filterPayload) => {
+const getDataAttendance = async (filterPayload) => {
     const tokenStore = useTokenStore();
     const token = tokenStore.dataUser.token;
 
     // call API login
-    const { data: response, status, pending } = useFetch('http://localhost:3000/web/v1/attendance/get-attendance', {
+    const { data: response, status, pending } = await  useFetch('http://localhost:3000/web/v1/attendance/get-attendance', {
         lazy: true,
         method: 'POST',
         headers: {
@@ -322,38 +326,37 @@ const getDataAttendance = (filterPayload) => {
         data = [];
     }
 
+    // store data to table
+    dataTable.value = data.length == 0 ? [] : data;
+    dataPending.value = pending;
+
     return { data, pending };
 }
 
-// store data
-const dataTable = ref();
-const pending = ref();
-
-const dataAttendance = getDataAttendance(filterPayload.value);
-dataTable.value = dataAttendance.data;
-pending.value = dataAttendance.pending;
-
-
-
 // handle submit filter
-const handleSubmitFilter = () => {
+const handleSubmitFilter = async () => {
+    // store filter
     filterPayload.value = {
         start: selectedDate.value.start === '' ? '-' : dayjs(selectedDate.value.start).format('YYYY-MM-DD'),
         end: selectedDate.value.end === '' ? '-' : dayjs(selectedDate.value.end).format('YYYY-MM-DD'),
         id_division: selectedDivision.value,
         id_shifting: selectedShift.value,
-        id_account: selectedAccount.value,
+        id_account: selectedAccount.value === '-' ? [] : [],
+        id_admin: [],
     }
-    console.log('Submit filter :>> ', toRaw(filterPayload.value));
+
+    await getDataAttendance(filterPayload.value);
 }
 
 // handle reset filter
 const handleResetFilter = () => {
+    // reset ref() to default
     selectedDate.value = { start: '', end: ''};
     selectedDivision.value = '-';
     selectedShift.value = '-';
     selectedAccount.value = '-';
 
+    // set filter to default ref()
     filterPayload.value = {
         start: selectedDate.value.start,
         end: selectedDate.value.end,
@@ -361,12 +364,8 @@ const handleResetFilter = () => {
         id_shifting: selectedShift.value,
         id_account: selectedAccount.value,
     }
-
-    console.log('Reset filter :>> ', filterPayload.value);
 }
 
-
-// data table
-// const dataApi = await useApiAttendance();
-// const dataTable = dataApi.data;
+// load when open this page
+await getDataAttendance(filterPayload.value);
 </script>
