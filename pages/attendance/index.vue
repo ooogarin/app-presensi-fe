@@ -318,7 +318,7 @@ const getDataAttendance = async (filterPayload) => {
                 end: item.attendance_end,
                 isPassDay: (item.date_attend_end > item.date_attend_start) ? true : false, // jika tanggal presensi selesai lebih besar dari tanggal presensi mulai
                 id_schedule: item.schedule.id_schedule // untuk detail action
-            }
+            };
 
             return newFormat;
         });
@@ -326,11 +326,7 @@ const getDataAttendance = async (filterPayload) => {
         data = [];
     }
 
-    // store data to table
-    dataTable.value = data.length == 0 ? [] : data;
-    dataPending.value = pending;
-
-    return { data, pending };
+    return { data, status, pending };
 }
 
 // handle submit filter
@@ -345,7 +341,9 @@ const handleSubmitFilter = async () => {
         id_admin: [],
     }
 
-    await getDataAttendance(filterPayload.value);
+    const { data, status, pending } = await getDataAttendance(filterPayload.value);
+    dataTable.value = data.length == 0 ? [] : data;
+    dataPending.value = pending;
 }
 
 // handle reset filter
@@ -367,5 +365,11 @@ const handleResetFilter = () => {
 }
 
 // load when open this page
-await getDataAttendance(filterPayload.value);
+const { data, status, pending } = await getDataAttendance(filterPayload.value);
+dataTable.value = data.length == 0 ? [] : data;
+dataPending.value = pending;
+
+// watch(dataPending.value, (newValue, oldValue) => {
+//     console.log('pending :>> ', newValue);
+// })
 </script>

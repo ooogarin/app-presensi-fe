@@ -86,5 +86,4 @@ const sortingDataDesc = () => {
 // load when open this page
 sortingDataAsc();
 
-
 </script>
