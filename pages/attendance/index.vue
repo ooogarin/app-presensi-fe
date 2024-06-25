@@ -103,44 +103,9 @@
                         <td class="px-2 py-4" colspan="7">
                             <div class="flex flex-row justify-between px-4 w-full">
                                 <div>
-                                    Menampilkan <span>{{ dataTable.length }}</span> data dari <span>{{ dataTable.length }}</span> data
+                                    Menampilkan <span>{{ dataTable.length }}</span> data dari <span>{{ items }}</span> data
                                 </div>
-                                <div class="flex flex-row -space-x-px shadow rounded-md">
-                                    <a href=""
-                                        class="flex justify-center items-center border-slate-300 bg-white hover:bg-slate-100 border rounded-l-md w-8 h-8">
-                                        <svg class="w-6 h-6 stroke-2 stroke-slate-600" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M15 18L9 12L15 6" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </a>
-                                    <a href=""
-                                        class="flex justify-center items-center border-slate-300 bg-white hover:bg-slate-100 border w-8 h-8 text-slate-600">
-                                        <span>1</span>
-                                    </a>
-                                    <a href=""
-                                        class="flex justify-center items-center border-slate-300 bg-white hover:bg-slate-100 border w-8 h-8 text-slate-600">
-                                        <span>2</span>
-                                    </a>
-                                    <a href=""
-                                        class="flex justify-center items-center border-slate-300 bg-blue-600 border w-8 h-8 text-white">
-                                        <span>3</span>
-                                    </a>
-                                    <a href=""
-                                        class="flex justify-center items-center border-slate-300 bg-white hover:bg-slate-100 border w-8 h-8 text-slate-600">
-                                        <span>4</span>
-                                    </a>
-                                    <a href=""
-                                        class="flex justify-center items-center border-slate-300 bg-white hover:bg-slate-100 border w-8 h-8 text-slate-600">
-                                        <span>5</span>
-                                    </a>
-                                    <a href=""
-                                        class="flex justify-center items-center border-slate-300 bg-white hover:bg-slate-100 border rounded-r-md w-8 h-8">
-                                        <svg class="w-6 h-6 stroke-2 stroke-slate-600" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <path d="M9 18L15 12L9 6" stroke-linecap="round" stroke-linejoin="round" />
-                                        </svg>
-                                    </a>
-                                </div>
+                                <Pagination v-model="page" :items="items" />
                             </div>
                         </td>
                     </tr>
@@ -284,6 +249,10 @@ const filterPayload = ref({
     id_account: [],
     id_admin: []
 });
+
+// pagination
+const page = ref(4);
+const items = ref(50);
 
 // data from API BE (attendance)
 const getDataAttendance = async (filterPayload) => {
