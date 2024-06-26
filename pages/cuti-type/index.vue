@@ -22,7 +22,6 @@
                 <span class="font-bold text-xl">Data Jenis Cuti</span>    
             </div>
             <div class="flex gap-4">
-                <ButtonBase label="Test" icon="i-flowbite-circle-plus-outline" />
                 <ButtonBase label="Tambah Jenis Cuti" icon="i-flowbite-circle-plus-outline" />
             </div>
         </div>
