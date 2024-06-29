@@ -76,7 +76,7 @@
     // link breadcrumb
     const linkBreadcrumb = [
         {
-            label: 'Personel',
+            label: 'Data Personel',
             to: '/account',
             icon: 'i-heroicons-users',
             labelClass: 'text-slate-600 text-base font-semibold',

@@ -33,8 +33,7 @@
                                         <input v-model="user.password" :type="isHidePassword ? 'password' : 'text'"
                                             class="rounded-xl w-full h-12 font-medium cursor-text pe-16 ps-4 focus:outline-slate-600 ring-1 ring-slate-600 focus:outline-offset-1"
                                             placeholder="Password">
-                                        <div @click="isHidePassword = !isHidePassword"
-                                            class="right-0 absolute flex justify-center items-center hover:bg-slate-100 rounded-r-xl w-12 h-full cursor-pointer round">
+                                        <div @click="isHidePassword = !isHidePassword" class="right-0 absolute flex justify-center items-center hover:bg-slate-100 rounded-r-xl w-12 h-full cursor-pointer round">
                                             <UIcon v-if="isHidePassword" name="i-heroicons-eye-slash"
                                                 class="w-6 h-6 text-slate-800" />
                                             <UIcon v-else name="i-heroicons-eye" class="w-6 h-6 text-slate-800" />

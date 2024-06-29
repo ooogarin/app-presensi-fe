@@ -54,7 +54,9 @@
                 </div>
                 <div class="flex gap-4">
                     <ButtonBase label="Export Data" icon="i-flowbite-printer-outline" />
-                    <ButtonBase label="Tambah Personel" icon="i-flowbite-circle-plus-outline" />
+                    <NuxtLink to="/account/add">
+                        <ButtonBase label="Tambah Personel" icon="i-flowbite-circle-plus-outline" />
+                    </NuxtLink>
                 </div>
             </div>
             <div class="flex border-2 rounded-xl w-full overflow-hidden">
